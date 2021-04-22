@@ -1,2 +1,17 @@
 # NSCL2019DataAnalysis
-sort code description
+* 程序版本：tree200911v11
+
+* 数据处理步骤及cut条件，附对应的函数。
+
+* 主程序：sort.cpp
+
+* 主要的类的说明
+
+  * det
+  * hira
+  * ringCounter
+  * elist
+  * fiber
+  * XYmon
+  * S800
+    * S800 data structure
