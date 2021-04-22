@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>DataAnalysis</title>
+<title>sort-cpp</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13116,62 +13116,77 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong><font size=5>数据处理步骤</font></strong></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#light-particles-(S4+CsI)" data-toc-modified-id="light-particles-(S4+CsI)-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>light particles (S4+CsI)</a></span><ul class="toc-item"><li><span><a href="#S4" data-toc-modified-id="S4-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>S4</a></span></li><li><span><a href="#CsI" data-toc-modified-id="CsI-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>CsI</a></span></li><li><span><a href="#pie-ring-CsI-matching" data-toc-modified-id="pie-ring-CsI-matching-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>pie-ring-CsI matching</a></span></li><li><span><a href="#CsI-calibration" data-toc-modified-id="CsI-calibration-1.4"><span class="toc-item-num">1.4&nbsp;&nbsp;</span>CsI calibration</a></span></li><li><span><a href="#add-back-energy-loss" data-toc-modified-id="add-back-energy-loss-1.5"><span class="toc-item-num">1.5&nbsp;&nbsp;</span>add back energy loss</a></span></li></ul></li><li><span><a href="#heavy-cores-(fiber+S800)" data-toc-modified-id="heavy-cores-(fiber+S800)-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>heavy cores (fiber+S800)</a></span><ul class="toc-item"><li><span><a href="#fiber" data-toc-modified-id="fiber-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>fiber</a></span></li><li><span><a href="#S800" data-toc-modified-id="S800-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>S800</a></span><ul class="toc-item"><li><span><a href="#CRDC" data-toc-modified-id="CRDC-2.2.1"><span class="toc-item-num">2.2.1&nbsp;&nbsp;</span>CRDC</a></span><ul class="toc-item"><li><span><a href="#anode-(Y-direction)" data-toc-modified-id="anode-(Y-direction)-2.2.1.1"><span class="toc-item-num">2.2.1.1&nbsp;&nbsp;</span>anode (Y direction)</a></span></li><li><span><a href="#cathode-(X-direction)" data-toc-modified-id="cathode-(X-direction)-2.2.1.2"><span class="toc-item-num">2.2.1.2&nbsp;&nbsp;</span>cathode (X direction)</a></span></li></ul></li><li><span><a href="#ion-chamber" data-toc-modified-id="ion-chamber-2.2.2"><span class="toc-item-num">2.2.2&nbsp;&nbsp;</span>ion chamber</a></span></li><li><span><a href="#PID-identification" data-toc-modified-id="PID-identification-2.2.3"><span class="toc-item-num">2.2.3&nbsp;&nbsp;</span>PID identification</a></span></li><li><span><a href="#inverse-map" data-toc-modified-id="inverse-map-2.2.4"><span class="toc-item-num">2.2.4&nbsp;&nbsp;</span>inverse map</a></span></li></ul></li><li><span><a href="#add-back-energy-loss" data-toc-modified-id="add-back-energy-loss-2.3"><span class="toc-item-num">2.3&nbsp;&nbsp;</span>add back energy loss</a></span></li></ul></li><li><span><a href="#构建不变质量谱" data-toc-modified-id="构建不变质量谱-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>构建不变质量谱</a></span></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="light-particles-(S4+CsI)">light particles (S4+CsI)<a class="anchor-link" href="#light-particles-(S4+CsI)">&#182;</a></h1>
+<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
+<p>description: main function</p>
+<p>version: 200911v11</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="S4">S4<a class="anchor-link" href="#S4">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
+<li><p>读取原始数据，并进行初步的数据解码。</p>
 <ul>
-<li><p><font color=blue>hira::unpackSi_HINP4()</font></p>
+<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
+</ul>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ol>
-<li><p>解码原始数据，得到pie和ring上信号的条数、能量和时间，并对能量进行线性刻度，刻度系数来自于214U alpha源数据。</p>
-</li>
-<li><p>pie和ring的能量阈值分别设为0.45 MeV和0.25 MeV，低于这一能量的信号被认为是pedestal。</p>
-</li>
-<li><p>数据处理中，没有使用S4时间信号。</p>
+<li><p>调用顶层类<code>det</code>进行数据分析。</p>
+<ul>
+<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
+<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
+</ul>
 </li>
 </ol>
-</li>
-</ul>
-<ul>
-<li><p><font color=blue>ringCounter::analysis()</font></p>
+<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
+
+<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
+<span class="p">{</span>
+  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
+  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
+  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ol>
-<li><p>如果pie或ring上有能量大于10MeV的信号，则将该事件舍弃。沉积能量过大的信号不是质子信号，并且会造成多根相邻条打火，能量异常（<font color=blue>elist::MaxEnergyCut()</font>）</p>
-</li>
-<li><p>处理坏条。实验中有几根条 (pie：0,14,15,47,64；ring：0,1,110,127) 没有信号或有负信号，将这些条有异常信号的事件舍弃。（<font color=blue>elist::badstrip()</font>）将这些坏条两侧相邻条 (pie：1和127、13和16、46和48、63和65；ring：42和44、109和111)同时有信号的事件也舍弃，因为这是粒子是入射在坏条上的，但是把两侧信号加起来能量不准确，因此不能使用。（<font color=blue>elist::badstrippair()</font>）</p>
-</li>
-<li><p>处理能量共享。因为质子在硅里沉积能量低，能量共享的条数少，因此只考虑两重事件，相邻条数量大于2的事件舍弃。对于两重事件，将两根相邻条上的能量相加，并做+0.107 MeV的shift以弥补在条间损失的能量，取两根条中能量较大的那根的位置和时间作为加和信号的位置和时间。（<font color=blue>elist::NeighboursNew(), elist::MaxNeighboursNew()</font>）</p>
-</li>
-<li><p>对处理完能量共享后的信号再做能量限制：最大能量10 MeV，最小能量阈值0.4 MeV。如果有信号超出这一能量范围，则将该事件舍弃。（<font color=blue>elist::MaxEnergyCut(), elist::Threshold()</font>）</p>
+<li><p>输出</p>
+<ul>
+<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
+</ul>
 </li>
 </ol>
-</li>
-</ul>
+<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
+<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
+
+<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
+<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</pre></div>
 
 </div>
 </div>
@@ -13179,291 +13194,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="CsI">CsI<a class="anchor-link" href="#CsI">&#182;</a></h2>
+<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><p><font color=blue>hira::unpackCsi()</font></p>
-<ol>
-<li>解码CsI原始数据，得到CsI id、时间和能量，将低于一定能量阈值 (~20 MeV)的信号舍弃。</li>
-<li>数据处理中没有使用CsI时间信号。</li>
-</ol>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="pie-ring-CsI-matching">pie-ring-CsI matching<a class="anchor-link" href="#pie-ring-CsI-matching">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><p><font color=blue>ringCounter::findCsi()</font></p>
-<ol>
-<li>要求pie、ring、CsI上的信号数相等，否则舍弃该事件。</li>
-<li>利用CsI的几何位置，剔除异常事件或能量共享事件（包括粒子打在两个CsI边界处，两个粒子打在同一根pie或ring条上），确定每一根pie和ring的匹配限制（比如有的pie只能和外环CsI匹配，它也就只能和外环ring匹配）。粒子打在ring 52上的事件被舍弃，因为第52根条刚好在内外CsI交界处，一定会有能量共享。</li>
-<li>在上一步的限制下，遍历所有可能的pie-ring匹配组合，选择出pie-ring正背面能量差平方和最小的组合情况，并且该组合中任一对pie和ring的能量差都要小于1.5 MeV。这样就完成了正背面匹配，同时也完成了硅和CsI信号的位置匹配，确定了粒子的入射位置和能量。 <font color=blue>（ringCounter::multiHit4(), ringCounter::loop4()</font>）  </li>
-</ol>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="CsI-calibration">CsI calibration<a class="anchor-link" href="#CsI-calibration">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><p><font color=blue>ringCounter::getSolution()</font></p>
-<ul>
-<li>对CsI进行分段能量刻度。低于96 MeV时用S4正面能量$\Delta E$和能损公式得到CsI里的能量，高于96 MeV时考虑位置依赖性，对不同$\theta$角的信号使用不同的刻度系数，刻度系数来自于质子束数据。</li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="add-back-energy-loss">add back energy loss<a class="anchor-link" href="#add-back-energy-loss">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><p><font color=blue>ringCounter::getSolution()</font></p>
-<ol>
-<li>进行$\Delta E-E$粒子鉴别</li>
-<li>加回质子在硅、铝板、1/2靶内的能损</li>
-<li>将质子能量减1.5 MeV，这是为了将Erel-cosThetaC趋势调水平而做的修正。</li>
-</ol>
-</li>
-<li><p>至此，轻粒子的pid、能量、位置、角度、质量等信息都已经完整。</p>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="heavy-cores-(fiber+S800)">heavy cores (fiber+S800)<a class="anchor-link" href="#heavy-cores-(fiber+S800)">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="fiber">fiber<a class="anchor-link" href="#fiber">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><p><font color=blue>hira::unpackFiber()</font></p>
-<ol>
-<li>读取两个fiber各4个角和一个打拿极共10路QDC信号。 </li>
-<li>将QDC原始道址加上随机数，再减去pedestal的中心值，作为QDC幅度值。</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li><p><font color=blue>XYmon::make_2d_v2(), fiber::make_2d_v2()</font></p>
-<ol>
-<li>当ABCD四个角信号均大于能量阈值(pedestal的5$\sigma$)时，认为该fiber测得信号。</li>
-<li>利用ABCD四个角的能量关系，得到PMT上信号位置，进一步得到两个方向上打火的fiber的位置。</li>
-<li>假设反应点在靶心，由粒子在fiber上的入射位置得到粒子出射角。因为fiber和S4平面离得很近 (7.6mm)，使用core和质子的相对角度对不变质量谱的分辨影响很小。</li>
-</ol>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="S800">S800<a class="anchor-link" href="#S800">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CRDC">CRDC<a class="anchor-link" href="#CRDC">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="anode-(Y-direction)">anode (Y direction)<a class="anchor-link" href="#anode-(Y-direction)">&#182;</a></h4><ul>
-<li><font color=blue>S800::DecodeS800Crdc()</font><ol>
-<li>解码得到CRDC信号从产生到漂移到阳极丝的时间<code>CRDC.tac</code>。</li>
-<li>CRDC的气压和电压会随着时间变化，导致相同位置入射的粒子漂移时间不同。以CRDC mask calibration的run为基准，将其附近的run的tac乘以scaling factor，这个值即mask run的tac中心值相对于每个run的tac中心值的比例，得到修正后的漂移时间<code>CRDC.Scaledtac</code>。</li>
-<li>利用mask run得到的刻度系数，将修正后的漂移时间刻度为y方向的入射位置[单位：mm]。</li>
-</ol>
-</li>
-</ul>
-<h4 id="cathode-(X-direction)">cathode (X direction)<a class="anchor-link" href="#cathode-(X-direction)">&#182;</a></h4><ul>
-<li><font color=blue>S800::DecodeS800CrdcRaw(), S800::CRDCIntegrate()</font><ol>
-<li>将CRDC阴极pad的信号做成hit结构，按pad id从小到大排序。位于上下边缘的pad 0,1,222,223的信号被舍弃。</li>
-<li>pad信号幅度减去pedestal。</li>
-<li>因为每个pad的增益不同，要对不同pad的信号幅度乘以各自的gain matching系数。</li>
-<li>无法做gain matching的pad，其信号幅度取相邻pad幅度的平均值。</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li><p><font color=blue>S800::CalculateGravity(), S800::CalculateFit()</font></p>
-<ol>
-<li>使用电荷重心法初步得到CRDC 阴极板的电荷分布中心，作为高斯拟合的参数，再用高斯拟合得到更精确的电荷中心值。</li>
-<li>要求pad hit multiplicity&gt;4，即能量最大的pad (<code>PadMax</code>)两侧各至少有2个pad打火 (14O和17Ne的多重性都大于5，因此对这两个剩余核的结果几乎无影响)。当粒子入射靠近CRDC上下边缘时，要求<code>PadMax</code>位置在[4,219]之间，且使用其两侧相等数量的pad做电荷重心和高斯拟合。例如，当<code>PadMax</code>=4时，只使用pad2~6的数据，pad7及之后的数据不用，这样才能得到合理的电荷重心结果。</li>
-</ol>
-</li>
-<li><p><font color=blue>S800::analyze()</font></p>
-<ol>
-<li>要求电荷重心法和高斯拟合得到的电荷中心值相差不超过1个pad；高斯拟合得到的x_fit的范围在(PadMax-1,PadMax+2)之间；x_sigma范围在(1,4)之间。不满足这些条件的事件，电荷分布一般不太正常，舍弃不满足条件的事件。</li>
-<li>将高斯拟合中心值<code>x_fit</code>刻度后得到CRDC的x位置[mm]，刻度系数固定为slope=2.54 mm/pad、offset=-281.94 mm。</li>
-</ol>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="ion-chamber">ion chamber<a class="anchor-link" href="#ion-chamber">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><font color=blue>S800::DecodeS800IonChamber()</font><ol>
-<li>ion chamber共16个segment，取这16个segment的平均值作为原始能量。</li>
-<li>在run81~158时，ion chamber的气压不稳定，导致沉积能量变化，对这些run的能量要乘以修正系数为300./gaspressure，300 Torr为正常气压值，gaspressure为这些run中测量的气压值。</li>
-</ol>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="PID-identification">PID identification<a class="anchor-link" href="#PID-identification">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><font color=blue>S800::analyze()</font><ol>
-<li><strong>beam pid</strong>: 由obj-xfp时间关系得到。这里使用的obj和xfp时间为MTDC测得的第一个hit的时间。</li>
-<li><strong>residue pid</strong>：由objCorrected-icScaledsum $ToF-\Delta E$关系得到。这里使用的obj时间为MTDC测得的第一个hit的时间，相对于afp和CRDC1x做修正得到objCorrected。</li>
-</ol>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="inverse-map">inverse map<a class="anchor-link" href="#inverse-map">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><font color=blue>S800::analyze()</font><ol>
-<li>利用CRDC1和CRDC2测量的位置，得到粒子在焦平面和位置和角度xfp, yfp, afp, bfp，作为inverse map的输入。(<font color=blue>S800FpTrack::CalculateFocalPlane()</font>)</li>
-<li>不同的磁铁设置，不同的residue (14O or 17Ne)，都要分别计算不同的inverse map (在S800网站或联系Daniel Bazin计算)。</li>
-<li>利用inverse map计算得到粒子在靶点处产生时的信息：ata, bta, yta, dta。由dta可以得到粒子动能。(<font color=blue>S800FpTrack::CalculateTracking()</font>)</li>
-<li>利用ata和bta计算得到theta和phi值，不过我们不使用S800测量的角度值。 (<font color=blue>S800::GetThetaPhi()</font>)</li>
-</ol>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="add-back-energy-loss">add back energy loss<a class="anchor-link" href="#add-back-energy-loss">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><p><font color=blue>det::LoadS800toSolution()</font></p>
-<ol>
-<li>加回core在fiber (54.1 mg/cm$^2$ BC400)、1/2靶内 (92.4 mg/cm$^2$ $^9$Be)的能损</li>
-<li>将core能量加8 MeV，这是为了将Erel-cosThetaC趋势调水平而做的修正。</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li>至此，剩余核的pid、能量、位置、角度、质量等信息都已经完整。</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="&#26500;&#24314;&#19981;&#21464;&#36136;&#37327;&#35889;">&#26500;&#24314;&#19981;&#21464;&#36136;&#37327;&#35889;<a class="anchor-link" href="#&#26500;&#24314;&#19981;&#21464;&#36136;&#37327;&#35889;">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><font color=blue>det::corr_18Mg(), det::corr_19Mg() ...</font><ul>
-<li>计算末态粒子的相对能，可以得到母核和中间态的衰变能；还可以得到Jacobi关联结果。</li>
-<li>对18Mg的不变质量谱不做cut，对19Mg的不变质量谱取cos$\theta_C$ cut范围为(-0.5,0.5)，以得到更好的分辨。</li>
-</ul>
-</li>
-</ul>
+<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
 
 </div>
 </div>
