@@ -9,7 +9,7 @@
 
   * [det](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/det.html)
   * [hira](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/hira.html)
-  * [ringCounter](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/ringCounterhtml)
+  * [ringCounter](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/ringCounter.html)
   * [elist](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/elist.html)
   * [fiber](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/elist.html)
   * [XYmon](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/XYmon.html)
