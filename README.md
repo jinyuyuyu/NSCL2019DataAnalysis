@@ -11,7 +11,7 @@
   * [hira](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/hira.html)
   * [ringCounter](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/ringCounter.html)
   * [elist](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/elist.html)
-  * [fiber](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/elist.html)
+  * [fiber](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/fiber.html)
   * [XYmon](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/XYmon.html)
   * [S800](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/S800.html)
     * S800类里的变量比较复杂，单独列出：[S800 data structure](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/S800_dataStructure.html)
