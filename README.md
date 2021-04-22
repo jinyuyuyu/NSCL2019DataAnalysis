@@ -1,5 +1,5 @@
 # NSCL2019DataAnalysis
-* 程序版本：tree200911v11
+* 程序版本：tree200911v11 (dated: 2020.11.05)
 
 * [数据处理步骤及cut条件](https://jinyuyuyu.github.io/NSCL2019DataAnalysis/man/DataAnalysis.html)，附对应的函数。
 
