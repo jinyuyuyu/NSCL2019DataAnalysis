@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>sort-cpp</title>
+<title>XYmon</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13117,16 +13117,21 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#class-XYmon" data-toc-modified-id="class-XYmon-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>class <code>XYmon</code></a></span><ul class="toc-item"><li><span><a href="#变量定义" data-toc-modified-id="变量定义-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>变量定义</a></span></li><li><span><a href="#函数定义" data-toc-modified-id="函数定义-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>函数定义</a></span></li></ul></li><li><span><a href="#XYmon::XYmon()" data-toc-modified-id="XYmon::XYmon()-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>XYmon::XYmon()</a></span></li><li><span><a href="#XYmon:make_2d_v2()" data-toc-modified-id="XYmon:make_2d_v2()-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>XYmon:make_2d_v2()</a></span></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
-<p>description: main function</p>
-<p>version: 200911v11</p>
+<h1 id="class-XYmon">class <code>XYmon</code><a class="anchor-link" href="#class-XYmon">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>code: XYmon.h   XYmon.cpp</p>
 
 </div>
 </div>
@@ -13134,60 +13139,134 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
-<li><p>读取原始数据，并进行初步的数据解码。</p>
-<ul>
-<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>调用顶层类<code>det</code>进行数据分析。</p>
-<ul>
-<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
-<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
+<h2 id="&#21464;&#37327;&#23450;&#20041;">&#21464;&#37327;&#23450;&#20041;<a class="anchor-link" href="#&#21464;&#37327;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">fiber</span> <span class="n">vert</span><span class="p">;</span>
+  <span class="n">fiber</span> <span class="n">horz</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">has_data</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">phi</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">thetadeg</span><span class="p">,</span><span class="n">phideg</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">afiber</span><span class="p">,</span> <span class="n">bfiber</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">distance</span><span class="p">;</span>
+  <span class="n">TRandom3</span> <span class="n">ran</span><span class="p">;</span>
+</pre></div>
 
-<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20989;&#25968;&#23450;&#20041;">&#20989;&#25968;&#23450;&#20041;<a class="anchor-link" href="#&#20989;&#25968;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">XYmon</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="nf">setDistance</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span> <span class="c1">//unused</span>
+  <span class="kt">void</span> <span class="nf">reset</span><span class="p">();</span>
+  <span class="kt">bool</span> <span class="nf">make_2d</span><span class="p">();</span>   <span class="c1">//unused</span>
+  <span class="kt">bool</span> <span class="nf">make_2d_v2</span><span class="p">();</span>
+</pre></div>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="XYmon::XYmon()">XYmon::XYmon()<a class="anchor-link" href="#XYmon::XYmon()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>设置fiber初始参数。</p>
+<p>调用的其他函数：fiber::setOrientation()</p>
+<p>被其他函数调用：hira::init()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">XYmon</span><span class="o">::</span><span class="n">XYmon</span><span class="p">(</span><span class="kt">float</span> <span class="n">dist2Si</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
-  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
-  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+  <span class="n">distance</span> <span class="o">=</span> <span class="n">dist2Si</span> <span class="o">+</span> <span class="mf">76.</span><span class="p">;</span> <span class="c1">//[mm] dist2Si是靶到Si的距离352mm，76mm是fiber到Si的距离</span>
+
+    <span class="n">horz</span><span class="p">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="s">&quot;horz&quot;</span><span class="p">);</span>
+    <span class="n">vert</span><span class="p">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="s">&quot;vert&quot;</span><span class="p">);</span>
+
+    <span class="n">horz</span><span class="p">.</span><span class="n">thA</span> <span class="o">=</span> <span class="mf">16.</span><span class="p">;</span> <span class="c1">//两个PMT各四个角的阈值</span>
+    <span class="n">horz</span><span class="p">.</span><span class="n">thB</span> <span class="o">=</span> <span class="mf">18.</span><span class="p">;</span>
+    <span class="n">horz</span><span class="p">.</span><span class="n">thC</span> <span class="o">=</span> <span class="mf">17.</span><span class="p">;</span>
+    <span class="n">horz</span><span class="p">.</span><span class="n">thD</span> <span class="o">=</span> <span class="mf">16.</span><span class="p">;</span>
+    <span class="n">vert</span><span class="p">.</span><span class="n">thA</span> <span class="o">=</span> <span class="mf">8.</span><span class="p">;</span>
+    <span class="n">vert</span><span class="p">.</span><span class="n">thB</span> <span class="o">=</span> <span class="mf">7.</span><span class="p">;</span>
+    <span class="n">vert</span><span class="p">.</span><span class="n">thC</span> <span class="o">=</span> <span class="mf">6.</span><span class="p">;</span>
+    <span class="n">vert</span><span class="p">.</span><span class="n">thD</span> <span class="o">=</span> <span class="mf">6.</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-<ol>
-<li><p>输出</p>
-<ul>
-<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
-<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
 
-<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
-<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="XYmon:make_2d_v2()">XYmon:make_2d_v2()<a class="anchor-link" href="#XYmon:make_2d_v2()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>根据horz和vert两个fiber上的信号位置，得到粒子在fiber array平面的入射点二维位置，并以靶心为反应点位置给出重带电粒子的入射角。</p>
+<p>调用的其他函数：fiber::make_2d_v2()</p>
+<p>被其他函数调用：hira::unpackFiber()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">XYmon</span><span class="o">::</span><span class="n">make_2d_v2</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">vert</span><span class="p">.</span><span class="n">make_2d_v2</span><span class="p">();</span>
+    <span class="n">horz</span><span class="p">.</span><span class="n">make_2d_v2</span><span class="p">();</span>
+    <span class="n">has_data</span> <span class="o">=</span>  <span class="n">vert</span><span class="p">.</span><span class="n">has_data</span> <span class="o">&amp;&amp;</span> <span class="n">horz</span><span class="p">.</span><span class="n">has_data</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">has_data</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">horz</span><span class="p">.</span><span class="n">position</span><span class="o">+</span><span class="n">ran</span><span class="p">.</span><span class="n">Rndm</span><span class="p">())</span><span class="o">/</span><span class="mf">64.</span><span class="o">*</span><span class="mf">16.</span> <span class="o">-</span> <span class="mf">8.</span><span class="p">;</span> <span class="c1">//in [mm]</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">vert</span><span class="p">.</span><span class="n">position</span><span class="o">+</span><span class="n">ran</span><span class="p">.</span><span class="n">Rndm</span><span class="p">())</span><span class="o">/</span><span class="mf">64.</span><span class="o">*</span><span class="mf">16.</span> <span class="o">-</span> <span class="mf">8.</span><span class="p">;</span> <span class="c1">//in [mm]</span>
+
+      <span class="n">r</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">pow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">2</span><span class="p">));</span>
+      <span class="n">theta</span> <span class="o">=</span> <span class="n">atan</span><span class="p">(</span><span class="n">r</span><span class="o">/</span><span class="n">distance</span><span class="p">);</span>
+      <span class="n">phi</span> <span class="o">=</span> <span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">phi</span><span class="o">&lt;</span><span class="mf">0.</span><span class="p">)</span> <span class="n">phi</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">TMath</span><span class="o">::</span><span class="n">Pi</span><span class="p">();</span>
+      <span class="n">thetadeg</span> <span class="o">=</span> <span class="n">theta</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+      <span class="n">phideg</span> <span class="o">=</span> <span class="n">phi</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+      <span class="n">xx</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span>
+      <span class="n">yy</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span>
+      <span class="n">afiber</span> <span class="o">=</span> <span class="n">atan</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">distance</span><span class="p">);</span>
+      <span class="n">bfiber</span> <span class="o">=</span> <span class="n">atan</span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">distance</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">has_data</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
 
 </div>
 </div>

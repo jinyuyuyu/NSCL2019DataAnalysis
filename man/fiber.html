@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>sort-cpp</title>
+<title>fiber</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13117,16 +13117,21 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#class-fiber" data-toc-modified-id="class-fiber-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>class <code>fiber</code></a></span><ul class="toc-item"><li><span><a href="#变量定义" data-toc-modified-id="变量定义-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>变量定义</a></span></li><li><span><a href="#函数定义" data-toc-modified-id="函数定义-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>函数定义</a></span></li></ul></li><li><span><a href="#fiber::make_2d_v2()" data-toc-modified-id="fiber::make_2d_v2()-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>fiber::make_2d_v2()</a></span></li><li><span><a href="#fiber::setOrientation()" data-toc-modified-id="fiber::setOrientation()-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>fiber::setOrientation()</a></span></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
-<p>description: main function</p>
-<p>version: 200911v11</p>
+<h1 id="class-fiber">class <code>fiber</code><a class="anchor-link" href="#class-fiber">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>code: fiber.h fiber.cpp</p>
 
 </div>
 </div>
@@ -13134,60 +13139,199 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
-<li><p>读取原始数据，并进行初步的数据解码。</p>
-<ul>
-<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>调用顶层类<code>det</code>进行数据分析。</p>
-<ul>
-<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
-<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
+<h2 id="&#21464;&#37327;&#23450;&#20041;">&#21464;&#37327;&#23450;&#20041;<a class="anchor-link" href="#&#21464;&#37327;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">float</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">thA</span><span class="p">,</span> <span class="n">thB</span><span class="p">,</span> <span class="n">thC</span><span class="p">,</span> <span class="n">thD</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">dynode</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">has_data</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">total</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">position</span><span class="p">;</span>
 
-<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
+  <span class="n">setgate</span> <span class="o">*</span> <span class="n">fgate</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span> <span class="c1">//setgate是自定义的一个类似TCutG的类</span>
+  <span class="n">setgate</span> <span class="o">*</span> <span class="n">dyngate</span><span class="p">;</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
+  <span class="kt">float</span> <span class="n">xedge</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="mi">7</span><span class="p">];</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20989;&#25968;&#23450;&#20041;">&#20989;&#25968;&#23450;&#20041;<a class="anchor-link" href="#&#20989;&#25968;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">make_2d</span><span class="p">();</span> <span class="c1">//unused</span>
+  <span class="kt">bool</span> <span class="nf">setOrientation</span><span class="p">(</span><span class="n">string</span> <span class="n">name</span><span class="p">);</span>
+  <span class="kt">bool</span> <span class="nf">make_2d_v2</span><span class="p">();</span>
+  <span class="kt">bool</span> <span class="nf">make_2d_v3</span><span class="p">(</span><span class="kt">float</span> <span class="n">xs</span><span class="p">,</span><span class="kt">float</span> <span class="n">xi</span><span class="p">,</span><span class="kt">float</span> <span class="n">ys</span><span class="p">,</span><span class="kt">float</span> <span class="n">yi</span><span class="p">);</span> <span class="c1">//unused</span>
+  <span class="kt">void</span> <span class="nf">reset</span><span class="p">();</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="fiber::make_2d_v2()">fiber::make_2d_v2()<a class="anchor-link" href="#fiber::make_2d_v2()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>当PMT四个角ABCD的信号都大于各自的阈值时，利用四个角信号的大小得到PMT上的信号位置(x,y)。PMT hit map上的每一个斑点对应一根fiber (边长0.25mm)，取两个斑点峰位的中心值作为两个斑点的分界位置，使用变量<code>fgate[8]</code>和<code>xedge[8][7]</code>分别界定PMT上y和x方向的斑点界限，将PMT分成8*8的64个小格，按顺序依次对应horz fiber从左到右、vert fiber从下到上的64根fiber。</p>
+<p><strong>注意：打拿极的能量和时间信号没有被使用。除了ABCD四个角各自的能量阈值之外，没有做其他的cut。</strong></p>
+<p>调用的其他函数：setgate::inGate()</p>
+<p>被其他函数调用：XYmon::make_2d_v2()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="./img/fiber1.png" width="800"></p>
+<ul>
+<li>下图分别为horz和vert两组fiber的PMT hit map及分界图</li>
+</ul>
+<table>
+<td>
+<img src="./img/fiberhorz.png"  width="400"><br>
+    </td>
+<td>
+<img src="./img/fibervert.png"  width="400"><br>
+    </td>
+    </table>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">fiber</span><span class="o">::</span><span class="n">make_2d_v2</span><span class="p">()</span>
 <span class="p">{</span>
-  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
-  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
-  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+  <span class="n">total</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">+</span> <span class="n">C</span> <span class="o">+</span> <span class="n">D</span><span class="p">;</span>
+  <span class="c1">//bool b_dyn = dyngate-&gt;inGate(total,dynode);</span>
+  <span class="c1">//if (A &gt; thA &amp;&amp; B &gt; thB &amp;&amp; C &gt; thC &amp;&amp; D&gt; thD &amp;&amp; b_dyn)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">A</span> <span class="o">&gt;</span> <span class="n">thA</span> <span class="o">&amp;&amp;</span> <span class="n">B</span> <span class="o">&gt;</span> <span class="n">thB</span> <span class="o">&amp;&amp;</span> <span class="n">C</span> <span class="o">&gt;</span> <span class="n">thC</span> <span class="o">&amp;&amp;</span> <span class="n">D</span><span class="o">&gt;</span> <span class="n">thD</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">((</span><span class="n">C</span><span class="o">+</span><span class="n">D</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="p">))</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="mf">500.</span><span class="p">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">((</span><span class="n">C</span><span class="o">+</span><span class="n">A</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">D</span><span class="o">+</span><span class="n">B</span><span class="p">))</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="mf">500.</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">jx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">fgate</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">inGate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+      <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;=</span><span class="n">xedge</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="n">jx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">xedge</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">6</span><span class="p">])</span> <span class="n">jx</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+          <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">7</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;=</span><span class="n">xedge</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">&amp;&amp;</span><span class="n">x</span><span class="o">&gt;</span><span class="n">xedge</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="n">jx</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+          <span class="n">position</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="n">i</span><span class="o">-</span><span class="n">jx</span><span class="o">+</span><span class="mi">7</span><span class="p">;</span>
+        <span class="k">else</span>
+          <span class="n">position</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="n">jx</span><span class="p">;</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">jx</span><span class="o">!=-</span><span class="mi">1000</span><span class="p">)</span> 
+          <span class="n">has_data</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span> 
+  <span class="k">return</span> <span class="n">has_data</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-<ol>
-<li><p>输出</p>
-<ul>
-<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
-<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
 
-<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
-<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="fiber::setOrientation()">fiber::setOrientation()<a class="anchor-link" href="#fiber::setOrientation()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>分别设置horz和vert两组fiber所对应PMT的分界参数。</p>
+<p>调用的其他函数:setgate::setgate()</p>
+<p>被其他函数调用：XYmon::XYmon()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">fiber</span><span class="o">::</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">//dyngate = new setgate(&quot;fiber&quot;,name);</span>
+  <span class="n">string</span> <span class="n">file</span><span class="p">;</span>
+  <span class="n">ostringstream</span> <span class="n">outstring</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">outstring</span><span class="p">.</span><span class="n">str</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+    <span class="n">outstring</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;f&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">outstring</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="n">fgate</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">setgate</span><span class="p">(</span><span class="s">&quot;fiber&quot;</span><span class="p">,</span><span class="n">file</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">name</span><span class="o">==</span><span class="s">&quot;horz&quot;</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">xx</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="o">-</span><span class="mf">327.00</span><span class="p">,</span><span class="o">-</span><span class="mf">221.00</span><span class="p">,</span><span class="o">-</span><span class="mf">115.00</span><span class="p">,</span><span class="o">-</span><span class="mf">9.00</span><span class="p">,</span><span class="mf">97.00</span><span class="p">,</span><span class="mf">203.00</span><span class="p">,</span><span class="mf">310.00</span><span class="p">},</span> <span class="c1">//iy==0</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">328.60</span><span class="p">,</span><span class="o">-</span><span class="mf">234.18</span><span class="p">,</span><span class="o">-</span><span class="mf">132.53</span><span class="p">,</span><span class="o">-</span><span class="mf">16.46</span><span class="p">,</span><span class="mf">105.50</span><span class="p">,</span><span class="mf">227.71</span><span class="p">,</span><span class="mf">329.47</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">351.17</span><span class="p">,</span><span class="o">-</span><span class="mf">239.23</span><span class="p">,</span><span class="o">-</span><span class="mf">127.29</span><span class="p">,</span><span class="o">-</span><span class="mf">10.67</span><span class="p">,</span><span class="mf">110.63</span><span class="p">,</span><span class="mf">224.38</span><span class="p">,</span><span class="mf">328.34</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">331.29</span><span class="p">,</span><span class="o">-</span><span class="mf">224.95</span><span class="p">,</span><span class="o">-</span><span class="mf">116.65</span><span class="p">,</span><span class="o">-</span><span class="mf">2.72</span><span class="p">,</span><span class="mf">114.84</span><span class="p">,</span><span class="mf">225.07</span><span class="p">,</span><span class="mf">319.76</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">330.29</span><span class="p">,</span><span class="o">-</span><span class="mf">234.06</span><span class="p">,</span><span class="o">-</span><span class="mf">124.93</span><span class="p">,</span><span class="mf">0.38</span><span class="p">,</span><span class="mf">118.29</span><span class="p">,</span><span class="mf">228.80</span><span class="p">,</span><span class="mf">324.40</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">320.85</span><span class="p">,</span><span class="o">-</span><span class="mf">228.18</span><span class="p">,</span><span class="o">-</span><span class="mf">118.01</span><span class="p">,</span><span class="mf">9.66</span><span class="p">,</span><span class="mf">124.30</span><span class="p">,</span><span class="mf">234.48</span><span class="p">,</span><span class="mf">334.51</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">309.62</span><span class="p">,</span><span class="o">-</span><span class="mf">217.49</span><span class="p">,</span><span class="o">-</span><span class="mf">111.21</span><span class="p">,</span><span class="mf">8.50</span><span class="p">,</span><span class="mf">128.17</span><span class="p">,</span><span class="mf">239.47</span><span class="p">,</span><span class="mf">332.22</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">327.00</span><span class="p">,</span><span class="o">-</span><span class="mf">221.00</span><span class="p">,</span><span class="o">-</span><span class="mf">115.00</span><span class="p">,</span><span class="o">-</span><span class="mf">9.00</span><span class="p">,</span><span class="mf">97.00</span><span class="p">,</span><span class="mf">203.00</span><span class="p">,</span><span class="mf">310.00</span><span class="p">}};</span> <span class="c1">//iy==7</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">7</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">xedge</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">name</span><span class="o">==</span><span class="s">&quot;vert&quot;</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">xx</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="o">-</span><span class="mf">298.2480</span><span class="p">,</span><span class="o">-</span><span class="mf">225.1245</span><span class="p">,</span><span class="o">-</span><span class="mf">130.1647</span><span class="p">,</span><span class="o">-</span><span class="mf">26.8741</span><span class="p">,</span><span class="mf">95.4176</span><span class="p">,</span><span class="mf">217.9685</span><span class="p">,</span><span class="mf">304.9545</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">297.5670</span><span class="p">,</span><span class="o">-</span><span class="mf">213.5975</span><span class="p">,</span><span class="o">-</span><span class="mf">115.26775</span><span class="p">,</span><span class="o">-</span><span class="mf">6.1977</span><span class="p">,</span><span class="mf">111.40005</span><span class="p">,</span><span class="mf">217.383</span><span class="p">,</span><span class="mf">302.971</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">304.3725</span><span class="p">,</span><span class="o">-</span><span class="mf">211.7405</span><span class="p">,</span><span class="o">-</span><span class="mf">119.60535</span><span class="p">,</span><span class="o">-</span><span class="mf">10.3076</span><span class="p">,</span><span class="mf">94.60625</span><span class="p">,</span><span class="mf">207.418</span><span class="p">,</span><span class="mf">300.651</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">319.9865</span><span class="p">,</span><span class="o">-</span><span class="mf">223.32</span><span class="p">,</span><span class="o">-</span><span class="mf">106.1122</span><span class="p">,</span><span class="mf">0.30855</span><span class="p">,</span><span class="mf">101.91875</span><span class="p">,</span><span class="mf">205.683</span><span class="p">,</span><span class="mf">293.5405</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">305.7195</span><span class="p">,</span><span class="o">-</span><span class="mf">223.7205</span><span class="p">,</span><span class="o">-</span><span class="mf">118.42465</span><span class="p">,</span><span class="o">-</span><span class="mf">4.58375</span><span class="p">,</span><span class="mf">105.7559</span><span class="p">,</span><span class="mf">215.9115</span><span class="p">,</span><span class="mf">302.5195</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">306.756</span><span class="p">,</span><span class="o">-</span><span class="mf">224.0315</span><span class="p">,</span><span class="o">-</span><span class="mf">113.0821</span><span class="p">,</span><span class="mf">0.21535</span><span class="p">,</span><span class="mf">108.04145</span><span class="p">,</span><span class="mf">211.0195</span><span class="p">,</span><span class="mf">294.3225</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">301.039</span><span class="p">,</span><span class="o">-</span><span class="mf">226.722</span><span class="p">,</span><span class="o">-</span><span class="mf">118.3593</span><span class="p">,</span><span class="o">-</span><span class="mf">8.38545</span><span class="p">,</span><span class="mf">105.07985</span><span class="p">,</span><span class="mf">219.6305</span><span class="p">,</span><span class="mf">302.662</span><span class="p">},</span>
+      <span class="p">{</span><span class="o">-</span><span class="mf">298.378</span><span class="p">,</span><span class="o">-</span><span class="mf">222.3945</span><span class="p">,</span><span class="o">-</span><span class="mf">118.6394</span><span class="p">,</span><span class="o">-</span><span class="mf">13.65405</span><span class="p">,</span><span class="mf">93.80635</span><span class="p">,</span><span class="mf">194.0375</span><span class="p">,</span><span class="mf">299.645</span><span class="p">}};</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">7</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">xedge</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;There&#39;s wrong direction of fiber!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
 
 </div>
 </div>

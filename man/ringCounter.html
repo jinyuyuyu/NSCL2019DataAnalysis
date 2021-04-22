@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>sort-cpp</title>
+<title>ringCounter</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13117,16 +13117,21 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#class-ringCounter" data-toc-modified-id="class-ringCounter-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>class <code>ringCounter</code></a></span><ul class="toc-item"><li><span><a href="#变量定义" data-toc-modified-id="变量定义-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>变量定义</a></span></li><li><span><a href="#函数定义" data-toc-modified-id="函数定义-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>函数定义</a></span></li><li><span><a href="#struct" data-toc-modified-id="struct-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>struct</a></span></li></ul></li><li><span><a href="#ringCounter::ringCounter()" data-toc-modified-id="ringCounter::ringCounter()-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>ringCounter::ringCounter()</a></span></li><li><span><a href="#ringCounter::analysis()" data-toc-modified-id="ringCounter::analysis()-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>ringCounter::analysis()</a></span></li><li><span><a href="#ringCounter::findCsi()" data-toc-modified-id="ringCounter::findCsi()-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>ringCounter::findCsi()</a></span></li><li><span><a href="#ringCounter::multiHit4()" data-toc-modified-id="ringCounter::multiHit4()-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>ringCounter::multiHit4()</a></span></li><li><span><a href="#ringCounter::loop4()" data-toc-modified-id="ringCounter::loop4()-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>ringCounter::loop4()</a></span></li><li><span><a href="#ringCounter::getSolution()" data-toc-modified-id="ringCounter::getSolution()-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>ringCounter::getSolution()</a></span></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
-<p>description: main function</p>
-<p>version: 200911v11</p>
+<h1 id="class-ringCounter">class <code>ringCounter</code><a class="anchor-link" href="#class-ringCounter">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>code: ringCounter.h ringCounter.cpp</p>
 
 </div>
 </div>
@@ -13134,44 +13139,524 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
-<li><p>读取原始数据，并进行初步的数据解码。</p>
-<ul>
-<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>调用顶层类<code>det</code>进行数据分析。</p>
-<ul>
-<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
-<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
+<h2 id="&#21464;&#37327;&#23450;&#20041;">&#21464;&#37327;&#23450;&#20041;<a class="anchor-link" href="#&#21464;&#37327;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">elist</span> <span class="n">Pie</span><span class="p">;</span>
+<span class="n">elist</span> <span class="n">Ring</span><span class="p">;</span>
+<span class="n">elist</span> <span class="n">Csi</span><span class="p">;</span>
+<span class="n">elist</span> <span class="n">PieRaw</span><span class="p">;</span>
+<span class="n">elist</span> <span class="n">RingRaw</span><span class="p">;</span>
+<span class="n">elist</span> <span class="n">CsiRaw</span><span class="p">;</span>
+<span class="n">setgate</span> <span class="o">*</span><span class="n">CsiGate</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+<span class="n">solution</span> <span class="n">Solution</span><span class="p">[</span><span class="mi">21</span><span class="p">];</span>
+<span class="n">pid</span> <span class="o">*</span> <span class="n">Pid</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+<span class="n">pid</span> <span class="o">*</span> <span class="n">Pid_cal</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+<span class="n">TGraph</span> <span class="o">*</span><span class="n">grCsiCal</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+<span class="n">CLosses</span> <span class="o">*</span><span class="n">losses</span><span class="p">;</span>
+<span class="n">CLosses</span> <span class="o">*</span><span class="n">losses_Al</span><span class="p">;</span>
+<span class="n">CLosses</span> <span class="o">*</span><span class="n">losses_Si</span><span class="p">;</span>
+<span class="n">calangle</span> <span class="o">*</span> <span class="n">calProton</span><span class="p">;</span>
+</pre></div>
 
-<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20989;&#25968;&#23450;&#20041;">&#20989;&#25968;&#23450;&#20041;<a class="anchor-link" href="#&#20989;&#25968;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">ringCounter</span><span class="p">(</span><span class="n">TRandom</span><span class="o">*</span> <span class="n">ran</span><span class="p">,</span> <span class="n">histo_sort</span> <span class="o">*</span><span class="n">Histo0</span><span class="p">,</span> <span class="kt">float</span> <span class="n">dist2Si</span><span class="p">);</span>
+<span class="o">~</span><span class="n">ringCounter</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">csical</span><span class="p">(</span><span class="kt">int</span> <span class="n">icsi1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">energy</span><span class="p">);</span>  <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">match</span><span class="p">();</span>        <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">analysis</span><span class="p">(</span><span class="n">s800_results</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">reset</span><span class="p">();</span>
+<span class="kt">double</span> <span class="nf">getMass</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">getMomentum</span><span class="p">();</span>
+<span class="c1">//Kyle, for two-proton decay</span>
+<span class="kt">int</span> <span class="nf">matchWithCsi</span><span class="p">();</span>     <span class="c1">//unused</span>
+<span class="kt">int</span> <span class="nf">multiHit</span><span class="p">();</span>       <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>       <span class="c1">//unused</span>
+<span class="c1">//Yu, for four-proton decay</span>
+<span class="kt">bool</span> <span class="nf">match4</span><span class="p">();</span>       <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">loop4</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">multiHit4</span><span class="p">();</span>
+<span class="kt">int</span> <span class="nf">matchWithCsi4</span><span class="p">();</span>   <span class="c1">//unused</span>
+<span class="kt">bool</span> <span class="nf">getSolution</span><span class="p">();</span>
+<span class="c1">//Li</span>
+<span class="kt">bool</span> <span class="nf">findCsi</span><span class="p">();</span>
+<span class="kt">int</span> <span class="nf">getCsiSolution</span><span class="p">();</span>  <span class="c1">//unused</span>
+</pre></div>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="struct">struct<a class="anchor-link" href="#struct">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="c1">// 存储Pie和CsI的对应结构</span>
+<span class="k">struct</span> <span class="n">pieCsiMap</span>
 <span class="p">{</span>
-  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
-  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
-  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="n">N</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">NcsiThere</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">csi</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+  <span class="kt">bool</span> <span class="n">there</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+<span class="p">};</span>
+
+<span class="c1">// 存储S800的粒子信息</span>
+<span class="k">struct</span> <span class="n">s800_results</span>
+<span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">trig_coin</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">trig_singles</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">trig_s800_singles</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">Zbeam</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">Abeam</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">Zresidue</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">Aresidue</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ringCounter::ringCounter()">ringCounter::ringCounter()<a class="anchor-link" href="#ringCounter::ringCounter()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>计算PieCsiMap数组，表示pie和CsI的对应关系，该数组有128维，每一维用来表示每个pie条可能对应的CsI segment序号。处于两块CsI交界处的pie，与这两块CsI都可以对应。</li>
+<li>计算csiBorderPie和csiAdjoinCsi数组，表示每个CsI两侧边缘的12个pie的序号和与其相邻的CsI序号。</li>
+<li>pmin,和pmax数组，表示外环CsI有能量共享时pie的位置 (用在ringCounter::findCsi()函数中，但用处不大)</li>
+<li>读入质子的pid cut，包括数据run的pid和束流刻度run的pid，读取文件分别为zlinenew2/pid'i'.zline和zline/pid153-'i'.zline</li>
+<li>读入能损文件，包括质子在Be靶、Al、Si里的能损。</li>
+<li>读入CsI按位置依赖的能量刻度文件。cal/pnew6/CsI_%d_p.cal。</li>
+<li>读入利用deltaE-E曲线得到的CsI能量刻度曲线和刻度点文件：cal/csiCalCurve.root、cal/csiCalPoint.txt。在该刻度点能量以下，认为没有位置依赖，使用deltaE-E曲线插值得到CsI能量。</li>
+<li>读取CsI和S800符合的时间窗文件：cal/csiTime.gate</li>
+<li>读取CsI有相邻条能量共享的区域cut文件</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>pid::pid</li>
+<li>CLosses::CLosses</li>
+<li>calangle::calangle</li>
+<li>setgate::setgate</li>
+</ul>
+<p>被其他函数调用</p>
+<ul>
+<li>hira::init()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">ringCounter</span><span class="o">::</span><span class="n">ringCounter</span><span class="p">(</span><span class="n">TRandom</span> <span class="o">*</span> <span class="n">ran0</span><span class="p">,</span> <span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">dist0</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ran</span> <span class="o">=</span> <span class="n">ran0</span><span class="p">;</span>
+  <span class="n">Histo</span> <span class="o">=</span> <span class="n">Histo1</span><span class="p">;</span>
+  <span class="n">distance</span> <span class="o">=</span> <span class="n">dist0</span><span class="p">;</span>
+
+  <span class="c1">//make map of Csi associated with Pies</span>
+  <span class="kt">int</span> <span class="n">id_csi</span><span class="p">,</span><span class="n">id_csi_plus</span><span class="p">,</span><span class="n">id_csi_minus</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Npie</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">//inner ring</span>
+    <span class="n">id_csi</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mf">32.</span><span class="p">)</span> <span class="o">+</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi</span> <span class="o">&gt;</span> <span class="mi">19</span><span class="p">)</span> <span class="n">id_csi</span> <span class="o">-=</span> <span class="mf">4.</span><span class="p">;</span>
+
+    <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">csi</span><span class="p">[</span><span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_csi</span><span class="p">;</span>
+    <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="c1">//in case pies and Csi are not lined up exactly</span>
+    <span class="c1">// consider Csi if pie is off by plus-minus one</span>
+    <span class="n">id_csi_plus</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mf">32.</span><span class="p">)</span> <span class="o">+</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_plus</span> <span class="o">&gt;</span> <span class="mi">19</span><span class="p">)</span> <span class="n">id_csi_plus</span> <span class="o">-=</span> <span class="mf">4.</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_plus</span> <span class="o">!=</span> <span class="n">id_csi</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">csi</span><span class="p">[</span><span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_csi_plus</span><span class="p">;</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">id_csi_minus</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mf">32.</span><span class="p">)</span> <span class="o">+</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_minus</span> <span class="o">&gt;</span> <span class="mi">19</span><span class="p">)</span> <span class="n">id_csi_plus</span> <span class="o">-=</span> <span class="mf">4.</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_minus</span> <span class="o">!=</span> <span class="n">id_csi</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">csi</span><span class="p">[</span><span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_csi_minus</span><span class="p">;</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">//outer ring</span>
+    <span class="n">id_csi</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mf">8.</span><span class="p">)</span> <span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi</span> <span class="o">==</span> <span class="mi">16</span><span class="p">)</span> <span class="n">id_csi</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span>
+
+    <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">csi</span><span class="p">[</span><span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_csi</span><span class="p">;</span>
+    <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="n">id_csi_plus</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mf">8.</span><span class="p">)</span> <span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_plus</span> <span class="o">==</span> <span class="mi">16</span><span class="p">)</span> <span class="n">id_csi_plus</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_plus</span> <span class="o">!=</span> <span class="n">id_csi</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">csi</span><span class="p">[</span><span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_csi_plus</span><span class="p">;</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">id_csi_minus</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mf">8.</span><span class="p">)</span> <span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_minus</span> <span class="o">==</span> <span class="mi">16</span><span class="p">)</span> <span class="n">id_csi_minus</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id_csi_minus</span> <span class="o">!=</span> <span class="n">id_csi</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">csi</span><span class="p">[</span><span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_csi_minus</span><span class="p">;</span>
+      <span class="n">PieCsiMap</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">N</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// calculate CsI borders</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">ncsiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="o">-</span><span class="mi">4</span><span class="o">+</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">3</span><span class="o">-</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">4</span><span class="o">+</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">128</span><span class="p">;</span>
+          <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">128</span><span class="p">;</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">16</span><span class="p">;</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">16</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">15</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">16</span><span class="p">;</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">16</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="n">ncsiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">16</span><span class="p">)</span><span class="o">*</span><span class="mi">32</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">16</span><span class="p">)</span><span class="o">*</span><span class="mi">32</span><span class="o">-</span><span class="mi">4</span><span class="o">+</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">16</span><span class="p">)</span><span class="o">*</span><span class="mi">32</span><span class="o">+</span><span class="mi">27</span><span class="o">-</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">16</span><span class="p">)</span><span class="o">*</span><span class="mi">32</span><span class="o">+</span><span class="mi">28</span><span class="o">+</span><span class="n">j</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">16</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">128</span><span class="p">;</span>
+          <span class="n">csiBorderPie</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">128</span><span class="p">;</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">19</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+          <span class="n">csiAdjoinCsi</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">pmin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="n">i</span><span class="p">;</span>
+      <span class="n">pmax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">6</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">9</span><span class="o">||</span><span class="n">i</span><span class="o">==</span><span class="mi">10</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">pmin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+      <span class="n">pmax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="n">pmin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+      <span class="n">pmax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">5</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">pmax</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">=</span> <span class="mi">110</span><span class="p">;</span>
+
+  <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+  <span class="n">ostringstream</span> <span class="n">outstring</span><span class="p">;</span>  
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">outstring</span><span class="p">.</span><span class="n">str</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+    <span class="n">outstring</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;zlinenew2/pid&quot;</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">outstring</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="n">Pid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">pid</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+
+    <span class="n">outstring</span><span class="p">.</span><span class="n">str</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+    <span class="n">outstring</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;zline/pid153-&quot;</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">outstring</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="n">Pid_cal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">pid</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">//loading energy loss tables for target</span>
+  <span class="n">losses</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CLosses</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&quot;.loss&quot;</span><span class="p">);</span>
+  <span class="c1">//loading energy loss table for Al plate</span>
+  <span class="n">losses_Al</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CLosses</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;_Al.loss&quot;</span><span class="p">);</span>
+  <span class="c1">//loading energy loss table for Si plate</span>
+  <span class="n">losses_Si</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CLosses</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;_Si.loss&quot;</span><span class="p">);</span>
+
+  <span class="c1">//Proton Calibrations  原来版本刻度使用的类，现在不再使用</span>
+  <span class="c1">//name = &quot;cal/p_calibrations.cal&quot;;</span>
+  <span class="c1">//calProton = new calibrate(1,20,name,1);</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;p&quot;</span><span class="p">;</span>
+  <span class="n">calProton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">calangle</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+
+  <span class="c1">//new CsI calibration parameters for protons  读入高能端角度依赖的刻度系数</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">128</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">kp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="n">bp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">TString</span> <span class="n">name1</span><span class="p">;</span>
+  <span class="n">ifstream</span> <span class="n">pnew</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">xring</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">kpp</span><span class="p">,</span> <span class="n">bpp</span><span class="p">;</span>
+  <span class="n">string</span> <span class="n">dum</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">10</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="n">name1</span><span class="p">.</span><span class="n">Form</span><span class="p">(</span><span class="s">&quot;cal/pnew6/CsI_%d_p.cal&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">pnew</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">name1</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">pnew</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;error! file: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;could not open!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">getline</span><span class="p">(</span><span class="n">pnew</span><span class="p">,</span><span class="n">dum</span><span class="p">);</span>
+    <span class="c1">//cout &lt;&lt; &quot;dum:&quot; &lt;&lt; dum &lt;&lt; endl;</span>
+    <span class="k">for</span><span class="p">(;;)</span>
+    <span class="p">{</span>
+      <span class="n">pnew</span> <span class="o">&gt;&gt;</span> <span class="n">xring</span> <span class="o">&gt;&gt;</span> <span class="n">kpp</span> <span class="o">&gt;&gt;</span> <span class="n">bpp</span><span class="p">;</span>
+      <span class="c1">//cout &lt;&lt; &quot;i=&quot; &lt;&lt; i &lt;&lt; &quot; xring=&quot; &lt;&lt; xring &lt;&lt; &quot; kp=&quot; &lt;&lt; kpp &lt;&lt; &quot; bp=&quot; &lt;&lt; bpp &lt;&lt; endl;</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">pnew</span><span class="p">.</span><span class="n">bad</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">pnew</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+      <span class="n">kp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">xring</span><span class="p">]</span> <span class="o">=</span> <span class="n">kpp</span><span class="p">;</span>
+      <span class="n">bp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">xring</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpp</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">pnew</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="c1">//read in csi calibrate curves  低能端用Si的deltaE刻度的CsI刻度曲线，无位置依赖</span>
+  <span class="n">TFile</span> <span class="o">*</span><span class="n">fCsiCal</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TFile</span><span class="p">(</span><span class="s">&quot;cal/csiCalCurve.root&quot;</span><span class="p">,</span><span class="s">&quot;read&quot;</span><span class="p">);</span>
+  <span class="n">ifstream</span> <span class="nf">infCsiCal</span><span class="p">(</span><span class="s">&quot;cal/csiCalPoint.txt&quot;</span><span class="p">);</span> 
+  <span class="kt">int</span> <span class="n">icsi</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">10</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="n">name1</span><span class="p">.</span><span class="n">Form</span><span class="p">(</span><span class="s">&quot;CsI%d_cal&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">grCsiCal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">TGraph</span><span class="o">*</span><span class="p">)</span><span class="n">fCsiCal</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(</span><span class="n">name1</span><span class="p">);</span>
+    <span class="n">infCsiCal</span> <span class="o">&gt;&gt;</span> <span class="n">icsi</span> <span class="o">&gt;&gt;</span> <span class="n">csiCalPoint</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">icsi</span><span class="o">!=</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;csiCalPoint.txt read in wrong&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">//time gates for s800 coincidence  这里的时间窗文件是Kyle以前的程序遗留的，在本分析过程中并未对CsI的时间做cut，因此该文件并未被用到。</span>
+  <span class="kt">int</span> <span class="n">one</span><span class="p">,</span><span class="n">two</span><span class="p">,</span><span class="n">three</span><span class="p">;</span>
+  <span class="n">ifstream</span> <span class="nf">fileTime</span><span class="p">(</span><span class="s">&quot;cal/csiTime.gate&quot;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">fileTime</span> <span class="o">&gt;&gt;</span> <span class="n">one</span> <span class="o">&gt;&gt;</span> <span class="n">two</span> <span class="o">&gt;&gt;</span> <span class="n">three</span><span class="p">;</span>
+    <span class="n">csiTimeMin</span><span class="p">[</span><span class="n">one</span><span class="p">]</span><span class="o">=</span> <span class="n">two</span><span class="p">;</span>
+    <span class="n">csiTimeMax</span><span class="p">[</span><span class="n">one</span><span class="p">]</span><span class="o">=</span> <span class="n">three</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">fileTime</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">protonYield_s800</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">protonYield_Mg20</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">protonYield_Mg20_Ne17</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">protonYield_Mg20_O14</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">alphaYield_s800</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">alphaYield_Mg20</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">alphaYield_Mg20_Ne17</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">//cut of energy sharing region of inner CsIs 文件0和4是CsI0的cut，文件1~3分别是CsI 1~3的cut</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">name1</span><span class="p">.</span><span class="n">Form</span><span class="p">(</span><span class="s">&quot;cut%d&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">CsiGate</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">setgate</span><span class="p">(</span><span class="s">&quot;CsI&quot;</span><span class="p">,</span><span class="n">string</span><span class="p">(</span><span class="n">name1</span><span class="p">));</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-<ol>
-<li><p>输出</p>
-<ul>
-<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
-<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
 
-<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
-<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ringCounter::analysis()">ringCounter::analysis()<a class="anchor-link" href="#ringCounter::analysis()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>对pie、ring上的信号做筛选，舍弃不满足条件的事件。对坏条的定义在parameters.h文件中。</li>
+<li>处理pie和ring的相邻条能量共享。</li>
+<li>设置pie和ring信号的最低能量阈值。</li>
+<li>将pie、ring、CsI上的信号进行几何匹配，以得到入射粒子的个数、能量和位置信息。</li>
+<li>CsI的时间没有做限制。</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>elist::MaxEnergyCut()</li>
+<li>elist::badstrip()</li>
+<li>elist::badstrippair()</li>
+<li>elist::NeighboursNew()</li>
+<li>elist::MaxNeighboursNew(2)</li>
+<li>elist::Threshold()</li>
+<li>ringCounter::findCsi()</li>
+<li>ringCounter::getSolution()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>det::analyze()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">ringCounter</span><span class="o">::</span><span class="n">analysis</span><span class="p">(</span><span class="n">s800_results</span> <span class="n">S800_results</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+  <span class="n">proton_present</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">Pie</span><span class="p">.</span><span class="n">Nstore</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">Ring</span><span class="p">.</span><span class="n">Nstore</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">Pie</span><span class="p">.</span><span class="n">MaxEnergyCut</span><span class="p">(</span><span class="mf">10.</span><span class="p">)</span><span class="o">||</span><span class="n">Ring</span><span class="p">.</span><span class="n">MaxEnergyCut</span><span class="p">(</span><span class="mf">10.</span><span class="p">))</span> <span class="c1">//如果pie或ring上有至少一条能量大于10，则舍弃该事件</span>
+  <span class="p">{</span>
+    <span class="n">maxenergycut</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">//exclude events where bad strips have signals</span>
+  <span class="c1">//use pie/ring data without threshold cut</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">PieRaw</span><span class="p">.</span><span class="n">badstrip</span><span class="p">(</span><span class="n">npiebad</span><span class="p">,</span><span class="n">piebad</span><span class="p">))</span> <span class="p">{</span><span class="n">badstrip</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> <span class="k">return</span><span class="p">;}</span> <span class="c1">//如果pie的坏条有信号，则事件舍弃</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">RingRaw</span><span class="p">.</span><span class="n">badstrip</span><span class="p">(</span><span class="n">nringbad</span><span class="p">,</span><span class="n">ringbad</span><span class="p">))</span> <span class="p">{</span><span class="n">badstrip</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> <span class="k">return</span><span class="p">;}</span> <span class="c1">//如果ring的坏条有信号，则事件舍弃</span>
+  <span class="c1">//exclude events where both neighbours of bad strips fire</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Pie</span><span class="p">.</span><span class="n">badstrippair</span><span class="p">(</span><span class="n">npiebadpair</span><span class="p">,</span><span class="n">piebadpair1</span><span class="p">,</span><span class="n">piebadpair2</span><span class="p">))</span> <span class="p">{</span><span class="n">badstrippair</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> <span class="k">return</span><span class="p">;}</span> <span class="c1">//如果pie的坏条的相邻条有信号，则事件舍弃</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Ring</span><span class="p">.</span><span class="n">badstrippair</span><span class="p">(</span><span class="n">nringbadpair</span><span class="p">,</span><span class="n">ringbadpair1</span><span class="p">,</span><span class="n">ringbadpair2</span><span class="p">))</span> <span class="p">{</span><span class="n">badstrippair</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> <span class="k">return</span><span class="p">;}</span> <span class="c1">//如果ring的空条的相邻条有信号，则事件舍弃</span>
+  <span class="n">Ring</span><span class="p">.</span><span class="n">NeighboursNew</span><span class="p">();</span> <span class="c1">//相邻条能量相加</span>
+  <span class="n">Pie</span><span class="p">.</span><span class="n">NeighboursNew</span><span class="p">();</span> <span class="c1">//相邻条能量相加 pie0 is empty in exp, so we needn&#39;t consider the circle issue</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Pie</span><span class="p">.</span><span class="n">MaxNeighboursNew</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="p">{</span><span class="n">pmaxneighbours</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> <span class="k">return</span><span class="p">;}</span> <span class="c1">//超过两根相邻条同时打火，事件舍弃</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Ring</span><span class="p">.</span><span class="n">MaxNeighboursNew</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="p">{</span><span class="n">rmaxneighbours</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> <span class="k">return</span><span class="p">;}</span> <span class="c1">//超过两根相邻条同时打火，事件舍弃</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Pie</span><span class="p">.</span><span class="n">MaxEnergyCut</span><span class="p">(</span><span class="mf">10.</span><span class="p">)</span><span class="o">||</span><span class="n">Ring</span><span class="p">.</span><span class="n">MaxEnergyCut</span><span class="p">(</span><span class="mf">10.</span><span class="p">))</span> <span class="c1">//相邻条add back之后pie或ring上有至少一条能量超过10 MeV，事件舍弃</span>
+  <span class="p">{</span>
+    <span class="n">maxenergycut</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">Ring</span><span class="p">.</span><span class="n">Threshold</span><span class="p">(</span><span class="mf">0.4</span><span class="p">);</span> <span class="c1">//pie能量阈值0.4 MeV，低于这个能量值的信号舍弃</span>
+  <span class="n">Pie</span><span class="p">.</span><span class="n">Threshold</span><span class="p">(</span><span class="mf">0.4</span><span class="p">);</span> <span class="c1">//ring能量阈值0.4 MeV，低于这个能量值的信号舍弃</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">Pie</span><span class="p">.</span><span class="n">Nstore</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">Ring</span><span class="p">.</span><span class="n">Nstore</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span> <span class="c1">//如果pie或ring上没有信号，事件舍弃</span>
+
+  <span class="c1">//remove csi with large times // random S800 Csi coincidences 卡CsI时间范围，但本分析中没有卡</span>
+  <span class="c1">//for (int i=Csi.Nstore-1;i&gt;=0;i--)</span>
+  <span class="c1">//{</span>
+  <span class="c1">//  if (Csi.Order[i].time/10. &gt; csiTimeMax[Csi.Order[i].strip])</span>
+  <span class="c1">//  {</span>
+  <span class="c1">//    Csi.Remove(i);</span>
+  <span class="c1">//  }</span>
+  <span class="c1">//}</span>
+
+  <span class="c1">//must have pie, strip, and Csi Information</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">Pie</span><span class="p">.</span><span class="n">Nstore</span> <span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">Ring</span><span class="p">.</span><span class="n">Nstore</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">Csi</span><span class="p">.</span><span class="n">Nstore</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span> <span class="c1">//要求pie、ring、CsI上必须同时有信号</span>
+
+
+  <span class="c1">//if (!S800_results.trig_coin) return;</span>
+
+  <span class="c1">//findCsi()和getSolution()函数用于将pie、ring、CsI进行几何匹配</span>
+  <span class="kt">bool</span> <span class="n">matched</span> <span class="o">=</span> <span class="n">findCsi</span><span class="p">();</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">matched</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">Nsolution</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">getSolution</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 
 </div>
@@ -13180,14 +13665,251 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
+<h1 id="ringCounter::findCsi()">ringCounter::findCsi()<a class="anchor-link" href="#ringCounter::findCsi()">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
+<p>利用CsI的几何位置，剔除异常事件和能量共享事件 (包括粒子打在两个CsI边界处、两个粒子打在同一个pie/ring/CsI上)，确定每个pie和ring的匹配限制(比如有的pie只可以和内环或外环ring匹配)。</p>
+<p>内环ring：1~51，外环ring：53~126。  ring第52条有信号的事件被舍弃，因为ring52刚好在内外环CsI交界处，一定会有能量共享。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>ringCounter::multiHit4()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>ringCounter::analysis()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ringCounter::multiHit4()">ringCounter::multiHit4()<a class="anchor-link" href="#ringCounter::multiHit4()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>利用findCsi()函数确定的pie和ring的匹配限制，调用loop4()函数确定在该限制下ring和pie匹配正背面能量差平方和最小的组合情况。如果该组合中有任一对pie和ring的能量差大于1.5 MeV，则该事件舍弃。将经过筛选后的正常事件存储在Solution类中。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>ringCounter::loop4()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>ringCounter::findCsi()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ringCounter::loop4()">ringCounter::loop4()<a class="anchor-link" href="#ringCounter::loop4()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>在findCsi()函数确定的pie&amp;ring匹配限制下，遍历所有可能的pie&amp;ring组合，挑选出所有pie&amp;ring能量差平方和最小的一种组合。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：无</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>ringCounter::multiHit4()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ringCounter::getSolution()">ringCounter::getSolution()<a class="anchor-link" href="#ringCounter::getSolution()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>对每个Solution (粒子)，根据pie和ring的id计算出其入射角theta和phi (假设出射点在靶心)。</li>
+<li>对CsI进行分段刻度：小于分段能量点时，用Si $\Delta E$刻度；大于分段能量点时，考虑位置依赖性，对不同的ring用不同的刻度系数。</li>
+<li>利用$\Delta E-E$进行粒子鉴别。</li>
+<li>加回质子在Si、Al、1/2 target里的能损，并把质子的能量-1.5 MeV (为了修正Erel-cosThetaC倾斜趋势)。</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数</p>
+<ul>
+<li>getPID</li>
+<li>getEin</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>ringCounter::analysis()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">ringCounter</span><span class="o">::</span><span class="n">getSolution</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">multProton</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">multAlpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nsolution</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">radius</span> <span class="o">=</span> <span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iRing</span><span class="o">+</span><span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Nstrip</span>
+      <span class="o">*</span><span class="p">(</span><span class="n">Si_r_max</span><span class="o">-</span><span class="n">Si_r_min</span><span class="p">)</span><span class="o">+</span><span class="n">Si_r_min</span><span class="p">;</span> <span class="c1">//inner radius of a ring</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">theta</span> <span class="o">=</span> <span class="n">atan</span><span class="p">(</span><span class="n">radius</span><span class="o">/</span><span class="n">distance</span><span class="p">);</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">phi</span> <span class="o">=</span> <span class="n">TMath</span><span class="o">::</span><span class="n">Pi</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iPie</span><span class="o">+</span><span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Npie</span><span class="o">*</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span><span class="o">*</span><span class="mf">2.</span><span class="p">;</span> <span class="c1">//use right-handed coordinate</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">phi</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">phi</span> <span class="o">+=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">TMath</span><span class="o">::</span><span class="n">Pi</span><span class="p">();</span>
+
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Xpos</span> <span class="o">=</span> <span class="n">radius</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">phi</span><span class="p">);</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Ypos</span> <span class="o">=</span> <span class="n">radius</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">phi</span><span class="p">);</span>
+
+    <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">theta</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">theta</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">);</span>
+    <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">HitMap</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+
+    <span class="c1">//Lets assume everything is a proton for now</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="o">&lt;</span><span class="mi">16</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iRing</span><span class="o">&lt;</span><span class="mi">53</span><span class="o">||</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iRing</span><span class="o">&gt;</span><span class="mi">126</span><span class="p">))</span> <span class="p">{</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;protonCalError&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="k">continue</span><span class="p">;}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="o">&gt;</span><span class="mi">15</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iRing</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">||</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iRing</span><span class="o">&gt;</span><span class="mi">51</span><span class="p">))</span> <span class="p">{</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;protonCalError&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="k">continue</span><span class="p">;}</span>
+    <span class="kt">float</span> <span class="n">energy</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span><span class="o">&lt;</span><span class="n">csiCalPoint</span><span class="p">[</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">])</span>
+      <span class="n">energy</span> <span class="o">=</span> <span class="n">grCsiCal</span><span class="p">[</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Eval</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span><span class="o">+</span><span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">());</span>
+    <span class="k">else</span>
+      <span class="n">energy</span> <span class="o">=</span> <span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span><span class="o">+</span><span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">())</span><span class="o">*</span><span class="n">kp</span><span class="p">[</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">][</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iRing</span><span class="p">]</span> <span class="o">+</span> <span class="n">bp</span><span class="p">[</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">][</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iRing</span><span class="p">];</span>
+
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyCsI</span> <span class="o">=</span> <span class="n">energy</span><span class="p">;</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="p">;</span>
+    <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ECsICSum_poscorrected</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">,</span><span class="n">energy</span><span class="p">);</span>
+    <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">dee_all</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">denergy</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">energy</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">FoundPid</span> <span class="o">=</span> <span class="n">Pid</span><span class="p">[</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">getPID</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span><span class="p">,</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">denergy</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">FoundPid</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Pid</span><span class="p">[</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Z</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Pid</span><span class="p">[</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">icsi</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">A</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">Z</span><span class="o">==</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">proton_present</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="n">multProton</span><span class="o">++</span><span class="p">;</span>
+      <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">ipid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">protonHitMap</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">dee_all_protonPID</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">denergy</span><span class="p">);</span>
+    <span class="p">}</span>  <span class="c1">//proton if</span>
+
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Z</span><span class="o">==</span><span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">multAlpha</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">float</span> <span class="n">sumEnergy</span> <span class="o">=</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="p">;</span> <span class="c1">//CsI in MeV</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">A</span> <span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="c1">//calculate energy lost in Si plate</span>
+      <span class="kt">float</span> <span class="n">Sithick</span> <span class="o">=</span> <span class="mf">235.35</span><span class="o">/</span><span class="n">cos</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">theta</span><span class="p">);</span> <span class="c1">//235.35 mg/cm2 Si plate (1014um)</span>
+      <span class="kt">float</span> <span class="n">EafterAl</span> <span class="o">=</span> <span class="n">losses_Si</span><span class="o">-&gt;</span><span class="n">getEin</span><span class="p">(</span><span class="n">sumEnergy</span><span class="p">,</span><span class="n">Sithick</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+      <span class="c1">//cout &lt;&lt; &quot;before E=&quot; &lt;&lt; sumEnergy &lt;&lt; &quot; Sithick=&quot; &lt;&lt; Sithick &lt;&lt; &quot; afterE=&quot; &lt;&lt; EafterAl &lt;&lt; endl;</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">SiEnergyDiff</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">EafterAl</span><span class="o">-</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="p">,</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">denergy</span><span class="p">);</span>
+      <span class="n">sumEnergy</span> <span class="o">=</span> <span class="n">EafterAl</span><span class="p">;</span>
+      <span class="c1">//calculate energy lost in Al plate</span>
+      <span class="kt">float</span> <span class="n">Althick</span> <span class="o">=</span> <span class="mf">1599.58</span><span class="o">/</span><span class="n">cos</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">theta</span><span class="p">);</span> <span class="c1">//1599.58mg/cm2 Al plate (5.92mm)</span>
+      <span class="kt">float</span> <span class="n">Eaftertarget</span> <span class="o">=</span> <span class="n">losses_Al</span><span class="o">-&gt;</span><span class="n">getEin</span><span class="p">(</span><span class="n">sumEnergy</span><span class="p">,</span><span class="n">Althick</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+      <span class="c1">//cout &lt;&lt; &quot;before E=&quot; &lt;&lt; sumEnergy &lt;&lt; &quot; Althick=&quot; &lt;&lt; Althick &lt;&lt; &quot; afterE=&quot; &lt;&lt; Eaftertarget &lt;&lt; endl;</span>
+      <span class="n">sumEnergy</span> <span class="o">=</span> <span class="n">Eaftertarget</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//Calculate the energy lost in the target</span>
+    <span class="kt">float</span> <span class="n">thick</span> <span class="o">=</span> <span class="mf">184.8</span><span class="o">/</span><span class="mf">2.</span><span class="o">/</span><span class="n">cos</span><span class="p">(</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">theta</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">ein</span> <span class="o">=</span> <span class="n">losses</span><span class="o">-&gt;</span><span class="n">getEin</span><span class="p">(</span><span class="n">sumEnergy</span><span class="p">,</span><span class="n">thick</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+    <span class="c1">//cout &lt;&lt; &quot;before E=&quot; &lt;&lt; sumEnergy &lt;&lt; &quot; thick=&quot; &lt;&lt; thick &lt;&lt; &quot; afterE=&quot; &lt;&lt; ein &lt;&lt; endl;</span>
+    <span class="c1">//cout &lt;&lt; &quot;Ebeforedecay= &quot; &lt;&lt; ein &lt;&lt; endl;</span>
+    <span class="c1">//Solution[i].Ekin = ein;</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Ekin</span> <span class="o">=</span> <span class="n">ein</span><span class="o">-</span><span class="mf">1.5</span><span class="p">;</span>
+    <span class="c1">//Solution[i].Ekin = ein-0.75;</span>
+    <span class="c1">//Solution[i].Ekin = ein/1.01;</span>
+    <span class="c1">//Solution[i].Ekin = (ein+0.9)/1.01;</span>
+    <span class="c1">//if(Solution[i].icsi&lt;16) Solution[i].Ekin = ein-1.5;</span>
+    <span class="c1">//else Solution[i].Ekin = ein-0.5;</span>
+    <span class="c1">//Solution[i].Ekin = (ein-0.1)/1.01;</span>
+    <span class="c1">//Solution[i].Ekin = (ein-77.)*42.72/44.+76.64;</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iZ</span> <span class="o">=</span> <span class="n">Z</span><span class="p">;</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">iA</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
+    <span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">mass</span> <span class="o">=</span> <span class="n">getMass</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 
 </div>
 </div>

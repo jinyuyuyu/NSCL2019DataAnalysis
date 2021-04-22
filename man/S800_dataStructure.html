@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>sort-cpp</title>
+<title>S800_dataStructure</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13117,16 +13117,21 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#S800-struct" data-toc-modified-id="S800-struct-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>S800 struct</a></span><ul class="toc-item"><li><span><a href="#struct-trig-(Trigger)" data-toc-modified-id="struct-trig-(Trigger)-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>struct <code>trig</code> (Trigger)</a></span></li><li><span><a href="#struct-tof-(Time-of-Flight)" data-toc-modified-id="struct-tof-(Time-of-Flight)-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>struct <code>tof</code> (Time-of-Flight)</a></span></li><li><span><a href="#struct-scint-(Plastic-Scintillator-E1)" data-toc-modified-id="struct-scint-(Plastic-Scintillator-E1)-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>struct <code>scint</code> (Plastic Scintillator E1)</a></span></li><li><span><a href="#struct-hodo-(hodoscope)" data-toc-modified-id="struct-hodo-(hodoscope)-1.4"><span class="toc-item-num">1.4&nbsp;&nbsp;</span>struct <code>hodo</code> (hodoscope)</a></span></li><li><span><a href="#struct-crdc" data-toc-modified-id="struct-crdc-1.5"><span class="toc-item-num">1.5&nbsp;&nbsp;</span>struct <code>crdc</code></a></span><ul class="toc-item"><li><span><a href="#CRDC-anode" data-toc-modified-id="CRDC-anode-1.5.1"><span class="toc-item-num">1.5.1&nbsp;&nbsp;</span>CRDC anode</a></span></li><li><span><a href="#CRDC-cathode" data-toc-modified-id="CRDC-cathode-1.5.2"><span class="toc-item-num">1.5.2&nbsp;&nbsp;</span>CRDC cathode</a></span></li></ul></li><li><span><a href="#struct-ic-(Ion-Chamber)" data-toc-modified-id="struct-ic-(Ion-Chamber)-1.6"><span class="toc-item-num">1.6&nbsp;&nbsp;</span>struct <code>ic</code> (Ion Chamber)</a></span></li><li><span><a href="#struct-mtdc-(New-MultiHit-TDC)" data-toc-modified-id="struct-mtdc-(New-MultiHit-TDC)-1.7"><span class="toc-item-num">1.7&nbsp;&nbsp;</span>struct <code>mtdc</code> (New MultiHit TDC)</a></span></li></ul></li><li><span><a href="#class-S800FpTrack" data-toc-modified-id="class-S800FpTrack-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>class <code>S800FpTrack</code></a></span></li><li><span><a href="#class-S800Map" data-toc-modified-id="class-S800Map-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>class <code>S800Map</code></a></span></li><li><span><a href="#其他变量" data-toc-modified-id="其他变量-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>其他变量</a></span><ul class="toc-item"><li><span><a href="#pid" data-toc-modified-id="pid-4.1"><span class="toc-item-num">4.1&nbsp;&nbsp;</span>pid</a></span></li><li><span><a href="#修正系数" data-toc-modified-id="修正系数-4.2"><span class="toc-item-num">4.2&nbsp;&nbsp;</span>修正系数</a></span></li></ul></li><li><span><a href="#histograms" data-toc-modified-id="histograms-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>histograms</a></span></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
-<p>description: main function</p>
-<p>version: 200911v11</p>
+<h1 id="S800-struct">S800 struct<a class="anchor-link" href="#S800-struct">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>程序中定义了一些struct结构，用来存储S800中不同类别的数据。</p>
 
 </div>
 </div>
@@ -13134,60 +13139,556 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
-<li><p>读取原始数据，并进行初步的数据解码。</p>
+<h2 id="struct-trig-(Trigger)">struct <code>trig</code> (Trigger)<a class="anchor-link" href="#struct-trig-(Trigger)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
+<li><code>registr</code>变量用来描述trigger类型。其他变量在数据分析中未使用。</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>S800::Trig</li>
+<li>trigger type<ul>
+<li>registr (1: s800 singles, 2: coin, 16: secondary)</li>
 </ul>
 </li>
-</ol>
-<ol>
-<li><p>调用顶层类<code>det</code>进行数据分析。</p>
-<ul>
-<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
-<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
+<li>trigger time <font color=red>(Phillips TDC not used)</font><ul>
+<li>s800</li>
+<li>external1</li>
+<li>external2</li>
+<li>secondary</li>
 </ul>
 </li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
+</ul>
 
-<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="struct-tof-(Time-of-Flight)">struct <code>tof</code> (Time-of-Flight)<a class="anchor-link" href="#struct-tof-(Time-of-Flight)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>以下变量在数据分析中未使用，相关时间全部由multihit TDC测量，在<code>struct mtdc</code>中。</li>
+</ul>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
-<span class="p">{</span>
-  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
-  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
-  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>S800::ToF<ul>
+<li>rf <font color=red> (Phillips TDC not used)</font></li>
+<li>obj <font color=red> (Phillips TDC not used)</font></li>
+<li>xfp <font color=red> (Phillips TDC not used)</font></li>
+<li>si <font color=red> (Phillips TDC not used)</font></li>
+<li>tac_obj <font color=red> (not used in anaylysis)</font></li>
+<li>tac_xfp <font color=red> (not used in anaylysis)</font></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="struct-scint-(Plastic-Scintillator-E1)">struct <code>scint</code> (Plastic Scintillator E1)<a class="anchor-link" href="#struct-scint-(Plastic-Scintillator-E1)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>S800末端有三个塑闪E1、E2、E3，本实验只使用了E1闪烁体。E1的时间在multiHit TDC packet里，这里的时间变量无效，E1的能量也没有在数据分析中被使用。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>S800::Scint[3]<ul>
+<li>de_up</li>
+<li>time_up <font color=red> (Phillips TDC not used)</font></li>
+<li>de_down</li>
+<li>time_down <font color=red> (Phillips TDC not used)</font></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="struct-hodo-(hodoscope)">struct <code>hodo</code> (hodoscope)<a class="anchor-link" href="#struct-hodo-(hodoscope)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>hodoscope是位于S800最末端的CsI闪烁体探测器阵列，用来测量总能量。一般用于区分重核的电核态，本实验中未使用。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="struct-crdc">struct <code>crdc</code><a class="anchor-link" href="#struct-crdc">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>S800::CRDC[2]</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="CRDC-anode">CRDC anode<a class="anchor-link" href="#CRDC-anode">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>相关数据在S800::DecodeS800Crdc()中进行解码并分析<ul>
+<li>anode (energy from anode)</li>
+<li>tac (time from anode)</li>
+<li>Scaledtac (tac with scaling per run)</li>
+<li>calY (calibration of Scaledtac to get Y)</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="CRDC-cathode">CRDC cathode<a class="anchor-link" href="#CRDC-cathode">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>下面按照数据处理的不同阶段对与CRDC阴极相关的变量进行分类。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>S800::DecodeS800CrdcRaw()<ul>
+<li>cdata[ch][sindex]</li>
+<li>samplewidth</li>
+</ul>
+</li>
+<li>S800::CRDCIntegrate()<ul>
+<li>PadMult</li>
+<li>raw[PadMult] (将采样能量平均值减去pedal，记为pad的原始信号大小)</li>
+<li>cal[PadMult] (after CRDC gain matching)</li>
+<li>pad[MultPad] (打火的pad id)</li>
+</ul>
+</li>
+<li>S800::CalculateGravity(), S800::CalculateFit()<ul>
+<li>MaxPad</li>
+<li>PadMax</li>
+<li>padsum</li>
+<li>x_gravity</li>
+<li>x_fit</li>
+<li>x_sigma</li>
+</ul>
+</li>
+<li>scaling factor<ul>
+<li>YScalingFactor</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="struct-ic-(Ion-Chamber)">struct <code>ic</code> (Ion Chamber)<a class="anchor-link" href="#struct-ic-(Ion-Chamber)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><p>S800::IC</p>
+<ul>
+<li>raw[ch]  &emsp; &emsp; &emsp;&emsp; 原始能量</li>
+<li>sum  &emsp;&emsp;&emsp; &emsp;&emsp;   各个segment原始能量的平均值</li>
+<li>Scaledsum  &emsp;&emsp; 各个segment原始能量平均值，scaling by gas pressure for run#81-run#158</li>
+<li>cal[ch]  &emsp;&emsp;&emsp;&emsp;  对原始能量做gain matching (added by jinyu)</li>
+<li>calsum[ch]  &emsp; &emsp;&nbsp;cal的平均值 (added by jinyu)</li>
+<li>Scaledcalsum &emsp; cal的平均值，scaling by gas pressure for run#81-run#158 (added by jinyu)</li>
+</ul>
+</li>
+<li><p>parameter</p>
+<ul>
+<li>p0[16] (gain matching parameter)</li>
+<li>p1[16] (gain matching parameter)</li>
+<li>ScalingFactor (gas pressure scaling factor)</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="struct-mtdc-(New-MultiHit-TDC)">struct <code>mtdc</code> (New MultiHit TDC)<a class="anchor-link" href="#struct-mtdc-(New-MultiHit-TDC)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>S800中所有的时间信号都由MTDC插件测量，因此所有时间信息都存储在这个struct中，其他struct中的时间变量都已不再使用。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>mtdc<ul>
+<li>e1up (channel 0)</li>
+<li>e1down (channel 1)</li>
+<li>xfp (channel 2)</li>
+<li>obj (channel 3)</li>
+<li>galotte (channel 4) (not used)</li>
+<li>rf (channel 5)</li>
+<li>hodoscope (channel 12) (not used)</li>
+</ul>
+</li>
+<li>第15道作为reference，要求raw[15]!=0, 每一道的时间都要减去raw[15]再乘以0.0625 (ch to ns).</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>--- after corection (S800::analyze())---</p>
+<ul>
+<li>mtdc<ul>
+<li>objCorrected (= mTDC.obj.at(0) + ObjCorr[0]*track-&gt;afp + ObjCorr[1]*CRDC[0].x_gravity)</li>
+<li>xfpCorrected (程序中未用)</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="class-S800FpTrack">class <code>S800FpTrack</code><a class="anchor-link" href="#class-S800FpTrack">&#182;</a></h1><p>--- inverse map ---</p>
+<ul>
+<li>input: afp, bfp, xfp, yfp</li>
+<li>output: ata, bta, yta, dta</li>
+</ul>
+<p>--- 修正 ---</p>
+<p>(因为下面的修正系数在S800FpTrack::S800FpTrack()函数中都定义为0，所以实际没有做修正)</p>
+<ul>
+<li>ata, bta, azita, scatter<ul>
+<li>修正系数：anglea, angleb</li>
+</ul>
+</li>
+<li>ata_cor, bta_cor, azita_cor, scatter_cor<ul>
+<li>修正系数：ata_dtacor, bta_ytacor, anglea_cor, angleb_cor</li>
+</ul>
+</li>
+</ul>
+<p>--- 最后结果 ---</p>
+<ul>
+<li>theta, phi, thetadeg, phideg, xxta, yyta, xxfp, yyfp</li>
+<li>energy, ptot, ppar, ptra, beta0, deltabeta</li>
+</ul>
+<p>--- parameter ---</p>
+<ul>
+<li>CRDC[0], CRDC[1]</li>
+<li>brho, mass, charge, order, zfp, gecorr, gap</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="class-S800Map">class <code>S800Map</code><a class="anchor-link" href="#class-S800Map">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>S800Map</code>类里的变量与inverse map的矩阵参数有关，没有明确的物理含义，在使用中与其他类和函数独立，在此不列举。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="&#20854;&#20182;&#21464;&#37327;">&#20854;&#20182;&#21464;&#37327;<a class="anchor-link" href="#&#20854;&#20182;&#21464;&#37327;">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="pid">pid<a class="anchor-link" href="#pid">&#182;</a></h2><ul>
+<li>beam_pid<ul>
+<li>Z, A</li>
+</ul>
+</li>
+<li>residue_pid</li>
+<li>residue_pid_Ne17</li>
+<li>residue_pid_O14<ul>
+<li>Z, A</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20462;&#27491;&#31995;&#25968;">&#20462;&#27491;&#31995;&#25968;<a class="anchor-link" href="#&#20462;&#27491;&#31995;&#25968;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="c1">//ion chamber</span>
+  <span class="kt">float</span> <span class="n">Pressure</span><span class="p">[</span><span class="mi">200</span><span class="p">];</span>
+  <span class="kt">float</span> <span class="n">Scaling</span><span class="p">[</span><span class="mi">200</span><span class="p">];</span>
+
+  <span class="c1">//CRDC</span>
+  <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">NPads</span> <span class="o">=</span> <span class="mi">224</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">CRDCPeds</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">NPads</span><span class="p">];</span>
+  <span class="kt">float</span> <span class="n">CRDCSlope</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span> <span class="c1">//[CRDC][X or Y]</span>
+  <span class="kt">float</span> <span class="n">CRDCOffset</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
+  <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">nbadPads</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">CRDCbad</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">nbadPads</span><span class="p">];</span>
+  <span class="kt">double</span> <span class="n">CRDCYScaling</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">500</span><span class="p">];</span>
+  <span class="kt">float</span> <span class="n">CRDCp0</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">NPads</span><span class="p">],</span> <span class="n">CRDCp1</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">NPads</span><span class="p">];</span> <span class="c1">//gain matching</span>
+  <span class="kt">int</span> <span class="n">nCRDCmaskruns</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">//maximum value, can be larger</span>
+  <span class="kt">int</span> <span class="n">CRDCparRun1</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">CRDCparRun2</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">//use one set of mask calibration between runs</span>
+  <span class="kt">float</span> <span class="n">crdcSlope</span><span class="p">[</span><span class="mi">10</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">crdcOffset</span><span class="p">[</span><span class="mi">10</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">gravity_width</span><span class="p">;</span>
+
+  <span class="c1">//obj timing</span>
+  <span class="kt">float</span> <span class="n">ObjCorr</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span> <span class="c1">//1 - obj/mrad  2 - obj/mm</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="histograms">histograms<a class="anchor-link" href="#histograms">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1PadMult</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">PadMult</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2PadMult</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">PadMult</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1Tac</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">tac</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2Tac</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">tac</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1ScaledTac</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">Scaledtac</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2ScaledTac</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">Scaledtac</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1Y</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2Y</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1AnodevsTac</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">anode</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">tac</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2AnodevsTac</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">anode</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">tac</span><span class="p">);</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">p</span><span class="o">&lt;</span><span class="n">CRDC</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">PadMult</span><span class="p">;</span><span class="n">p</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1raw</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
+        <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1Summary</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pad</span><span class="p">[</span><span class="n">p</span><span class="p">],</span><span class="n">CRDC</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2raw</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
+        <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2Summary</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pad</span><span class="p">[</span><span class="n">p</span><span class="p">],</span><span class="n">CRDC</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">//Histo-&gt;CRDC1PadMax_18Ne-&gt;Fill(CRDC[0].PadMax,CRDC[0].MaxPad);</span>
+  <span class="c1">//Histo-&gt;CRDC2PadMax_18Ne-&gt;Fill(CRDC[1].PadMax,CRDC[1].MaxPad);</span>
+
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1X</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2X</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1XY</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">tac</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2XY</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">tac</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1XCalY</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2XCalY</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1diffvspad</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_fit</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2diffvspad</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_fit</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">);</span>
+
+  <span class="c1">// for mask calibration</span>
+  <span class="kt">float</span> <span class="n">mask1x</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_gravity</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">mask1y</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">mask2x</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_gravity</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_gravity</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">mask2y</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1mask</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mask1x</span><span class="p">,</span> <span class="n">mask1y</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2mask</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mask2x</span><span class="p">,</span> <span class="n">mask2y</span><span class="p">);</span>
+
+  <span class="n">mask1x</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_fit</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_fit</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_fit</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="n">mask1y</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="n">mask2x</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_fit</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">x_fit</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_fit</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="n">mask2y</span> <span class="o">=</span> <span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">calY</span><span class="o">-</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">calY</span><span class="p">)</span><span class="o">/</span><span class="mf">1073.</span><span class="o">*</span><span class="mf">70.</span><span class="p">;</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1XFitY</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mask1x</span><span class="p">,</span> <span class="n">mask1y</span><span class="p">);</span>
+  <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2XFitY</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mask2x</span><span class="p">,</span> <span class="n">mask2y</span><span class="p">);</span>
+  <span class="c1">// ====================</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">mTDC</span><span class="p">.</span><span class="n">e1up</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">Te1up</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">e1up</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">mTDC</span><span class="p">.</span><span class="n">e1down</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">Te1down</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">e1down</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">mTDC</span><span class="p">.</span><span class="n">xfp</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjvsXFP</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">mTDC</span><span class="p">.</span><span class="n">xfp</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">Trig</span><span class="p">.</span><span class="n">registr</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjvsXFP_coin</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">mTDC</span><span class="p">.</span><span class="n">xfp</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+      <span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">getPID</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">mTDC</span><span class="p">.</span><span class="n">xfp</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorr</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">-</span><span class="n">correctedObj</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">12</span> <span class="o">&amp;&amp;</span> <span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span> <span class="o">==</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorrvsICsum_Mg20</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">sum</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorrvsICsumScaled_Mg20</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">Scaledsum</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorrvsICcalsumScaled_Mg20</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">Scaledcalsum</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span> <span class="o">==</span> <span class="mi">18</span><span class="p">)</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorrvsICsumScaled_Ne18</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">Scaledsum</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">9</span> <span class="o">&amp;&amp;</span> <span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span> <span class="o">==</span> <span class="mi">17</span><span class="p">)</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorrvsICsumScaled_F17</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">Scaledsum</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">8</span> <span class="o">&amp;&amp;</span> <span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span> <span class="o">==</span> <span class="mi">16</span><span class="p">)</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorrvsICsumScaled_O16</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">Scaledsum</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">7</span> <span class="o">&amp;&amp;</span> <span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span> <span class="o">==</span> <span class="mi">15</span><span class="p">)</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjCorrvsICsumScaled_N15</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">Scaledsum</span><span class="p">);</span>
+
+    <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjvsICsum</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">sum</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">12</span> <span class="o">&amp;&amp;</span> <span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span> <span class="o">==</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjvsICsum_Mg20</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">sum</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjvsICsumScaled_Mg20</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">obj</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">IC</span><span class="p">.</span><span class="n">Scaledsum</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="o">==</span><span class="mi">12</span><span class="o">&amp;&amp;</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="o">==</span><span class="mi">20</span><span class="o">&amp;&amp;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="o">==</span><span class="mi">10</span><span class="o">&amp;&amp;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="o">==</span><span class="mi">18</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1PadMax_18Ne</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">MaxPad</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2PadMax_18Ne</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">MaxPad</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="o">==</span><span class="mi">12</span><span class="o">&amp;&amp;</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="o">==</span><span class="mi">20</span><span class="o">&amp;&amp;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="o">==</span><span class="mi">10</span><span class="o">&amp;&amp;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="o">==</span><span class="mi">17</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1PadMax_17Ne</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">MaxPad</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2PadMax_17Ne</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">MaxPad</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="o">==</span><span class="mi">12</span><span class="o">&amp;&amp;</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="o">==</span><span class="mi">20</span><span class="o">&amp;&amp;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="o">==</span><span class="mi">8</span><span class="o">&amp;&amp;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="o">==</span><span class="mi">14</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC1PadMax_14O</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">MaxPad</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">CRDC2PadMax_14O</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">PadMax</span><span class="p">,</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">MaxPad</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span> <span class="o">==</span> <span class="mi">8</span> <span class="o">&amp;&amp;</span> <span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span> <span class="o">==</span> <span class="mi">14</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="c1">// cout &lt;&lt; &quot;phi = &quot; &lt;&lt; track-&gt;phideg &lt;&lt; endl;</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">atavsbta</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">ata</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">bta</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">xxtavsyyta</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">xxta</span><span class="p">,</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">yyta</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">yta</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">yta</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">afpvsbfp</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">afp</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">bfp</span><span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">xxfpvsyyfp</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">xxfp</span><span class="p">,</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">yyfp</span><span class="p">);</span>
+
+      <span class="c1">// Looking at corrections</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">Objvsafp</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">afp</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ObjvsCRDC1X</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">mTDC</span><span class="p">.</span><span class="n">objCorrected</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="n">CRDC</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x_gravity</span><span class="p">);</span>
+
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">ThetavsPhi</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">thetadeg</span><span class="p">,</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">phideg</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">pTot_Ne17</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">ptot</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">pPar_Ne17</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">ppar</span><span class="p">);</span>
+      <span class="n">Histo</span><span class="o">-&gt;</span><span class="n">pTrans_Ne17</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">ptra</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-<ol>
-<li><p>输出</p>
-<ul>
-<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
-<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
-
-<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
-<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
 
 </div>
 </div>

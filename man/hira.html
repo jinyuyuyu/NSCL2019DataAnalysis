@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>sort-cpp</title>
+<title>hira</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13117,16 +13117,21 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#class-hira" data-toc-modified-id="class-hira-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>class <code>hira</code></a></span><ul class="toc-item"><li><span><a href="#变量定义" data-toc-modified-id="变量定义-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>变量定义</a></span></li><li><span><a href="#函数定义" data-toc-modified-id="函数定义-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>函数定义</a></span></li></ul></li><li><span><a href="#hira::hira()" data-toc-modified-id="hira::hira()-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>hira::hira()</a></span></li><li><span><a href="#hira::init()" data-toc-modified-id="hira::init()-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>hira::init()</a></span></li><li><span><a href="#hira::unpack()" data-toc-modified-id="hira::unpack()-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>hira::unpack()</a></span></li><li><span><a href="#hira::unpackSi_HINP4()" data-toc-modified-id="hira::unpackSi_HINP4()-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>hira::unpackSi_HINP4()</a></span></li><li><span><a href="#hira::unpackCsi()" data-toc-modified-id="hira::unpackCsi()-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>hira::unpackCsi()</a></span></li><li><span><a href="#hira::unpackFiber()" data-toc-modified-id="hira::unpackFiber()-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>hira::unpackFiber()</a></span></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
-<p>description: main function</p>
-<p>version: 200911v11</p>
+<h1 id="class-hira">class <code>hira</code><a class="anchor-link" href="#class-hira">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>code: hira.h hira.cpp</p>
 
 </div>
 </div>
@@ -13134,44 +13139,207 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
-<li><p>读取原始数据，并进行初步的数据解码。</p>
-<ul>
-<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>调用顶层类<code>det</code>进行数据分析。</p>
-<ul>
-<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
-<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
+<h2 id="&#21464;&#37327;&#23450;&#20041;">&#21464;&#37327;&#23450;&#20041;<a class="anchor-link" href="#&#21464;&#37327;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">ringCounter</span> <span class="o">*</span> <span class="n">RingCounter</span><span class="p">;</span>
+<span class="n">XYmon</span> <span class="o">*</span>   <span class="n">XY_mon</span><span class="p">;</span>
+<span class="n">TDC1190</span> <span class="o">*</span><span class="n">TDC</span><span class="p">;</span>
+<span class="n">caen</span> <span class="n">ADC</span><span class="p">;</span>
+<span class="n">caen</span> <span class="n">QDC</span><span class="p">;</span>
+<span class="n">calibrate</span> <span class="o">*</span> <span class="n">calCsi</span><span class="p">;</span>
+<span class="n">calibrate</span> <span class="o">*</span> <span class="n">calPies</span><span class="p">;</span>
+<span class="n">calibrate</span> <span class="o">*</span> <span class="n">calRings</span><span class="p">;</span>
+</pre></div>
 
-<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20989;&#25968;&#23450;&#20041;">&#20989;&#25968;&#23450;&#20041;<a class="anchor-link" href="#&#20989;&#25968;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">hira</span><span class="p">(</span><span class="n">TRandom</span><span class="o">*</span> <span class="n">ran</span><span class="p">,</span> <span class="n">histo_sort</span><span class="o">*</span> <span class="n">Histo0</span><span class="p">,</span> <span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo1</span><span class="p">);</span>
+<span class="o">~</span><span class="n">hira</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">init</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">reset</span><span class="p">();</span>
+<span class="kt">bool</span> <span class="nf">unpack</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="o">*&amp;</span> <span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">unpackSi_HINP4</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="o">*&amp;</span> <span class="n">point</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">unpackCsi</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="o">*&amp;</span> <span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">unpackFiber</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="o">*&amp;</span> <span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">analyze</span><span class="p">();</span>
+</pre></div>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="hira::hira()">hira::hira()<a class="anchor-link" href="#hira::hira()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>hira::init()</li>
+</ul>
+<p>被其他函数调用：</p>
+<ul>
+<li>det::det(histo_sort <em> Histo0,histo_read </em> Histo1)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">hira</span><span class="o">::</span><span class="n">hira</span><span class="p">(</span><span class="n">TRandom</span> <span class="o">*</span> <span class="n">ran0</span><span class="p">,</span> <span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo0</span><span class="p">,</span> <span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo1</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
-  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
-  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+  <span class="n">type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">Histo_read</span> <span class="o">=</span> <span class="n">Histo1</span><span class="p">;</span>
+  <span class="n">Histo</span> <span class="o">=</span> <span class="n">Histo0</span><span class="p">;</span>
+  <span class="n">ran</span> <span class="o">=</span> <span class="n">ran0</span><span class="p">;</span>
+  <span class="n">init</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
-<ol>
-<li><p>输出</p>
-<ul>
-<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
-<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
 
-<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
-<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="hira::init()">hira::init()<a class="anchor-link" href="#hira::init()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>导入pie和ring的mapping文件: datfiles/S4Rings_new.txt, datfiles/S4Pies.txt</li>
+<li>导入Si和CsI的刻度文件：cal/Pies.cal, cal/Rings.cal, cal/p_calibrations.cal</li>
+<li>导入CsI pedestal文件：datfiles/CsIPedestals.dat (<font color=red>怎么判断pedestal的</font>)</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>TDC1190::TDC1190</li>
+<li>calibrate::calibrate</li>
+<li>ringCounter::ringCounter</li>
+<li>XYmon::XYmon</li>
+</ul>
+<p>被其他函数调用：</p>
+<ul>
+<li>hira::hira</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">hira</span><span class="o">::</span><span class="n">init</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">xmarker</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mh">0x1ff3</span><span class="p">;</span>
+
+  <span class="n">TDC</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TDC1190</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">128</span><span class="p">);</span> <span class="c1">//registers 3 hits, reference channel 20, 128 total channels</span>
+
+  <span class="c1">//make map of rings</span>
+  <span class="n">ifstream</span> <span class="nf">ifile</span><span class="p">(</span><span class="s">&quot;datfiles/S4Rings_new.txt&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ifile</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ring map not found&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">abort</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+  <span class="n">getline</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span><span class="n">name</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">CB</span><span class="p">,</span><span class="n">Ch</span><span class="p">,</span><span class="n">iR</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(;;)</span>
+  <span class="p">{</span>
+    <span class="n">ifile</span> <span class="o">&gt;&gt;</span> <span class="n">CB</span> <span class="o">&gt;&gt;</span> <span class="n">Ch</span> <span class="o">&gt;&gt;</span> <span class="n">iR</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ifile</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ifile</span><span class="p">.</span><span class="n">bad</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+    <span class="n">RingMap</span><span class="p">[</span><span class="n">CB</span><span class="o">-</span><span class="mi">5</span><span class="p">][</span><span class="n">Ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">iR</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">ifile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="n">ifile</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+
+  <span class="c1">// make map of pies</span>
+  <span class="n">ifstream</span> <span class="nf">ifile2</span><span class="p">(</span><span class="s">&quot;datfiles/S4Pies.txt&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ifile2</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Pie map not found&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">abort</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">getline</span><span class="p">(</span><span class="n">ifile2</span><span class="p">,</span><span class="n">name</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">iP</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(;;)</span>
+  <span class="p">{</span>
+    <span class="n">ifile2</span> <span class="o">&gt;&gt;</span> <span class="n">CB</span> <span class="o">&gt;&gt;</span> <span class="n">Ch</span> <span class="o">&gt;&gt;</span> <span class="n">iP</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ifile2</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ifile2</span><span class="p">.</span><span class="n">bad</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+    <span class="n">PieMap</span><span class="p">[</span><span class="n">CB</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">Ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">iP</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">ifile2</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="n">ifile2</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+
+  <span class="c1">//read in calibrations</span>
+  <span class="kt">int</span> <span class="n">Ntele</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">Nstrip</span> <span class="o">=</span> <span class="mi">128</span><span class="p">;</span>
+
+  <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;cal/Pies.cal&quot;</span><span class="p">;</span>
+  <span class="n">calPies</span> <span class="o">=</span> <span class="k">new</span> <span class="n">calibrate</span><span class="p">(</span><span class="n">Ntele</span><span class="p">,</span><span class="n">Nstrip</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;cal/Rings.cal&quot;</span><span class="p">;</span>
+  <span class="n">calRings</span> <span class="o">=</span> <span class="k">new</span> <span class="n">calibrate</span><span class="p">(</span><span class="n">Ntele</span><span class="p">,</span><span class="n">Nstrip</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;cal/p_calibrations.cal&quot;</span><span class="p">;</span>   <span class="c1">//CsI粗刻系数</span>
+  <span class="n">calCsi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">calibrate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="kt">float</span> <span class="n">dist2Si</span> <span class="o">=</span> <span class="mf">352.</span><span class="p">;</span> <span class="c1">//mm for Mg18 run</span>
+  <span class="n">RingCounter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ringCounter</span><span class="p">(</span><span class="n">ran</span><span class="p">,</span><span class="n">Histo</span><span class="p">,</span><span class="n">dist2Si</span><span class="p">);</span>
+  <span class="n">XY_mon</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XYmon</span><span class="p">(</span><span class="n">dist2Si</span><span class="p">);</span>
+
+  <span class="n">ifstream</span> <span class="nf">infile</span><span class="p">(</span><span class="s">&quot;datfiles/CsIPedestals.dat&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">infile</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;CsI pedestal file not found&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">abort</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="kt">int</span> <span class="n">icsi</span><span class="p">,</span> <span class="n">pedestal</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(;;)</span>
+  <span class="p">{</span>
+    <span class="n">infile</span> <span class="o">&gt;&gt;</span> <span class="n">icsi</span> <span class="o">&gt;&gt;</span> <span class="n">pedestal</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">infile</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">infile</span><span class="p">.</span><span class="n">bad</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+    <span class="n">CsIPedestals</span><span class="p">[</span><span class="n">icsi</span><span class="p">]</span> <span class="o">=</span> <span class="n">pedestal</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </div>
@@ -13180,14 +13348,537 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
+<h1 id="hira::unpack()">hira::unpack()<a class="anchor-link" href="#hira::unpack()">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
+<p>调用函数分别进行Si, CsI, fiber原始数据的解码。如果Si或CsI 解码的结果返回false (即没有测到正确的轻粒子)，则return，最终导致sort.cpp里该事件处理终止。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>hira::unpackSi_HINP4</li>
+<li>hira::unpackCsi</li>
+<li>hira::unpackFiber</li>
+</ul>
+<p>被其他函数调用：</p>
+<ul>
+<li>det::unpack()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">hira</span><span class="o">::</span><span class="n">unpack</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*&amp;</span><span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">)</span> <span class="c1">// pass the pointer by reference, *&amp; a reference to a pointer</span>
+<span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+  <span class="n">stat</span> <span class="o">=</span> <span class="n">unpackSi_HINP4</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">stat</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; bad after hira&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">stat</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">stat</span> <span class="o">=</span> <span class="n">unpackCsi</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">stat</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; bad after CsI &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">stat</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">stat</span> <span class="o">=</span> <span class="n">unpackFiber</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">stat</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="hira::unpackSi_HINP4()">hira::unpackSi_HINP4()<a class="anchor-link" href="#hira::unpackSi_HINP4()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>解码chip board记录的raw data，得到Si上信号的位置、能量和时间，并对能量进行线性刻度。<ul>
+<li>相关文档：18Mg/DAQ-Electronics/HINP - Operation Guide to the HINP chip system.pdf</li>
+<li>18Mg/NSCLnotes/notes/mapping</li>
+</ul>
+</li>
+<li>把pie和ring的id、原始道址、刻度能量、时间存储到elist类中。</li>
+<li>设置pie和ring的能量阈值分别为0.45 MeV和0.25 MeV，低于这一阈值的认为是pedestal，不计入pie或ring上的打火数。<font color=red>可以尝试修改阈值</font></li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>calibrate::getEnergy 能量刻度</li>
+<li>elist::AddN 按strip序号从小到大排列</li>
+<li>elist::Add 按能量从低到高排列</li>
+</ul>
+<p>被其他类调用：</p>
+<ul>
+<li>hira::unpack()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">hira</span><span class="o">::</span><span class="n">unpackSi_HINP4</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*&amp;</span><span class="n">point</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">marker</span><span class="p">;</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">iMB</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">iMB</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span><span class="n">iMB</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">marker</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">marker</span> <span class="o">!=</span> <span class="n">xmarker</span><span class="p">[</span><span class="n">iMB</span><span class="p">])</span>
+    <span class="p">{</span>
+      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Did not read the proper XLM marker. Was &quot;</span> 
+        <span class="o">&lt;&lt;</span> <span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">marker</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; expected &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">xmarker</span><span class="p">[</span><span class="n">iMB</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">dec</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+      <span class="c1">// dec: decimal        十进制</span>
+      <span class="c1">// hex: hexadecimal    十六进制</span>
+      <span class="c1">// oct: octal          八进制</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">NstripsRead</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">NWords</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*</span> <span class="n">endHINP</span> <span class="o">=</span> <span class="n">point</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">NWords</span> <span class="o">&gt;</span> <span class="mi">2048</span> <span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;NWords larger than 2048&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">endHINP</span> <span class="o">+=</span> <span class="n">NWords</span><span class="o">+</span><span class="mi">2</span><span class="p">;</span>
+    <span class="n">point</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">NstripsRead</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">NstripsRead</span> <span class="o">%</span><span class="mi">4</span> <span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;NstripsRead can not be divided by 4&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">NstripsRead</span> <span class="o">/=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">//each strip provides an id, energy high, energy low, and time</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">NstripsRead</span> <span class="o">&gt;</span> <span class="mi">512</span><span class="p">)</span> <span class="c1">//Max number of channels = 16 chip boards x 32 channels</span>
+    <span class="p">{</span>
+      <span class="n">point</span> <span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Read more than the possible number of channels for MB &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">marker</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// bad buffer</span>
+    <span class="p">}</span>
+    <span class="n">point</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">istrip</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">istrip</span> <span class="o">&lt;</span> <span class="n">NstripsRead</span><span class="p">;</span><span class="n">istrip</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">id</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="o">++</span><span class="p">;</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">chipNum</span> <span class="o">=</span> <span class="p">(</span><span class="n">id</span><span class="o">&amp;</span><span class="mh">0x1FE0</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="mi">5</span><span class="p">;</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">chanNum</span> <span class="o">=</span> <span class="n">id</span> <span class="o">&amp;</span> <span class="mh">0x1F</span><span class="p">;</span>  <span class="c1">//由chipNum和ChanNum可以得到S4的pie和ring的编号</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ienergy</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="o">++</span><span class="p">;</span>   <span class="c1">//pie或ring测得能量值对应的原始道址</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ilowenergy</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="o">++</span><span class="p">;</span> <span class="c1">//low gain数据，对我们没用</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">itime</span> <span class="o">=</span>  <span class="o">*</span><span class="n">point</span><span class="o">++</span><span class="p">;</span>   <span class="c1">//pie或ring信号的时间对应的原始道址</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">chipNum</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">chanNum</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">chanNum</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="c1">//For S4</span>
+        <span class="n">chipNum</span> <span class="o">/=</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">chipNum</span> <span class="o">=</span> <span class="n">chipNum</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">chanNum</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">chanNum</span><span class="p">;</span> <span class="c1">//For S4</span>
+      <span class="p">}</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">chanNum</span> <span class="o">&gt;</span> <span class="mi">31</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;chanNum too big&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">chipNum</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;chipNum too big &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">chipNum</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">//Filling the Pies histograms and calibrating</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">chipNum</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">chipNum</span> <span class="o">&lt;=</span><span class="mi">4</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">iPie</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+        <span class="n">iPie</span> <span class="o">=</span> <span class="n">PieMap</span><span class="p">[</span><span class="n">chipNum</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">chanNum</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">iPie</span> <span class="o">&gt;</span> <span class="mi">127</span> <span class="o">||</span> <span class="n">iPie</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span> 
+          <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; PieMap error!!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+          <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kt">float</span> <span class="n">energy</span> <span class="o">=</span> <span class="n">calPies</span><span class="o">-&gt;</span><span class="n">getEnergy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">iPie</span><span class="p">,</span><span class="n">ienergy</span><span class="o">+</span><span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">());</span>
+        <span class="kt">float</span> <span class="n">time</span> <span class="o">=</span> <span class="n">itime</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">();</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span> <span class="mf">0.45</span><span class="p">)</span> <span class="c1">//pie能量阈值0.45 MeV</span>
+        <span class="p">{</span>
+          <span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Pie</span><span class="p">.</span><span class="n">AddN</span><span class="p">(</span><span class="n">iPie</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">ilowenergy</span><span class="p">,</span><span class="n">ienergy</span><span class="p">,</span><span class="n">time</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">PieRaw</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">iPie</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">ilowenergy</span><span class="p">,</span><span class="n">ienergy</span><span class="p">,</span><span class="n">time</span><span class="p">);</span> <span class="c1">//这一句是为了在存储到tree中时按能量排序，PieRaw这个elist对象在数据分析中没有再被使用</span>
+
+      <span class="p">}</span>
+
+      <span class="c1">//filling the rings histograms and calibrating</span>
+      <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">chipNum</span> <span class="o">&gt;=</span><span class="mi">5</span> <span class="o">&amp;&amp;</span> <span class="n">chipNum</span> <span class="o">&lt;=</span><span class="mi">8</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">iRing</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+        <span class="n">iRing</span> <span class="o">=</span> <span class="n">RingMap</span><span class="p">[</span><span class="n">chipNum</span><span class="o">-</span><span class="mi">5</span><span class="p">][</span><span class="n">chanNum</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">iRing</span> <span class="o">&gt;</span> <span class="mi">127</span> <span class="o">||</span> <span class="n">iRing</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span> 
+          <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; RingMap error!!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+          <span class="c1">//cout &lt;&lt; &quot;ChipBoard = &quot; &lt;&lt; chipNum &lt;&lt; &quot; Channel = &quot; &lt;&lt; chanNum &lt;&lt; &quot; Ring = &quot; &lt;&lt; iRing &lt;&lt; endl;</span>
+          <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kt">float</span> <span class="n">energy</span> <span class="o">=</span> <span class="n">calRings</span><span class="o">-&gt;</span><span class="n">getEnergy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">iRing</span><span class="p">,</span><span class="n">ienergy</span><span class="o">+</span><span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">());</span>
+        <span class="kt">float</span> <span class="n">time</span> <span class="o">=</span> <span class="n">itime</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">();</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span><span class="mf">0.25</span><span class="p">)</span> <span class="c1">//ring能量阈值0.25 MeV</span>
+        <span class="p">{</span>
+          <span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Ring</span><span class="p">.</span><span class="n">AddN</span><span class="p">(</span><span class="n">iRing</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">ilowenergy</span><span class="p">,</span><span class="n">ienergy</span><span class="p">,</span><span class="n">time</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">RingRaw</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">iRing</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="n">ilowenergy</span><span class="p">,</span><span class="n">ienergy</span><span class="p">,</span><span class="n">time</span><span class="p">);</span> <span class="c1">//这一句是为了在存储到tree中时按能量排序，RingRaw这个elist对象在数据分析中没有再被使用</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">endHINP</span><span class="p">;</span>
+
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="hira::unpackCsi()">hira::unpackCsi()<a class="anchor-link" href="#hira::unpackCsi()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>从ADC读取CsI能量并进行初步线性刻度 (在ringCounter.cpp中会进行考虑位置依赖的刻度)，存入<code>struct DataE</code>数组中</li>
+<li>在原始道址大于该道设置的阈值<code>CsIPedestals</code>时，使用elist::Add将该数据存入<code>elist Csi</code>中。</li>
+<li>从TDC读取CsI时间信号。<font color=red>但是程序里实际并没有使用时间信息，使用了所有正常时间、异常时间和无时间信号的事件。</font>另外，Kyle原程序中将同时有能量信号和时间信号的CsI channel进行了匹配，然后调用elist::Add()，由于实验使用的是multihit TDC，可能记录多个能量，Kyle的做法会导致一个道的信号被Add多次，造成CsI上信号增多的错误。</li>
+<li>ADC和TDC的channel信号来源见：18Mg/DAQ-Electronics/electronics - simple.pptx。</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>caen::read 读取caen ADC插件的raw data</li>
+<li>calibrate::getEnergy 线性刻度</li>
+<li>elist:Add 按strip序号从小到大排列</li>
+<li>TDC1190::read 读取multihit TDC1190插件的raw data</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>hira::unpack()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">hira</span><span class="o">::</span><span class="n">unpackCsi</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*&amp;</span><span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">NE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">jon</span> <span class="o">=</span><span class="mi">5</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">iadc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">iadc</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span><span class="n">iadc</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f3</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f4</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">point</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">f3</span> <span class="o">==</span> <span class="mh">0xffff</span> <span class="o">&amp;&amp;</span> <span class="n">f4</span> <span class="o">==</span> <span class="mh">0xffff</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">point</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="c1">//cout &lt;&lt; &quot;No ADC, Skipping to tdc&quot; &lt;&lt; endl;</span>
+      <span class="k">continue</span><span class="p">;</span>
+    <span class="p">}</span> 
+    <span class="n">ADC</span><span class="p">.</span><span class="n">number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>  <span class="c1">// suck out the info in the qdc</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">ADC</span><span class="p">.</span><span class="n">number</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">ADC</span><span class="p">.</span><span class="n">underflow</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">ADC</span><span class="p">.</span><span class="n">overflow</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+      <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">.</span><span class="n">channel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">32</span><span class="o">*</span><span class="n">iadc</span><span class="p">;</span>
+      <span class="kt">int</span> <span class="n">ienergy</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+      <span class="k">if</span><span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">iCsi</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+
+        <span class="kt">float</span> <span class="n">energy</span> <span class="o">=</span> <span class="n">calCsi</span><span class="o">-&gt;</span><span class="n">getEnergy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">id</span><span class="p">,</span><span class="n">ienergy</span><span class="o">+</span><span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">());</span>
+        <span class="n">DataE</span><span class="p">[</span><span class="n">NE</span><span class="p">].</span><span class="n">id</span> <span class="o">=</span> <span class="n">iCsi</span><span class="p">;</span>
+        <span class="n">DataE</span><span class="p">[</span><span class="n">NE</span><span class="p">].</span><span class="n">ienergy</span> <span class="o">=</span> <span class="n">ienergy</span><span class="p">;</span>
+        <span class="n">DataE</span><span class="p">[</span><span class="n">NE</span><span class="p">].</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">ienergy</span><span class="o">&gt;</span><span class="n">CsIPedestals</span><span class="p">[</span><span class="n">iCsi</span><span class="p">])</span>
+        <span class="p">{</span>
+          <span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Csi</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">DataE</span><span class="p">[</span><span class="n">NE</span><span class="p">].</span><span class="n">id</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">DataE</span><span class="p">[</span><span class="n">NE</span><span class="p">].</span><span class="n">ienergy</span><span class="p">,</span><span class="mf">0.</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">CsiRaw</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">DataE</span><span class="p">[</span><span class="n">NE</span><span class="p">].</span><span class="n">id</span><span class="p">,</span><span class="n">energy</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">DataE</span><span class="p">[</span><span class="n">NE</span><span class="p">].</span><span class="n">ienergy</span><span class="p">,</span><span class="mf">0.</span><span class="p">);</span>
+
+        <span class="n">NE</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f1</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+    <span class="n">point</span><span class="o">++</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f2</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+    <span class="n">point</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">f1</span> <span class="o">!=</span> <span class="mh">0xffff</span> <span class="o">&amp;&amp;</span> <span class="n">f2</span> <span class="o">!=</span> <span class="mh">0xffff</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;didnt read Ecsi right&quot;</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">NT</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">itdc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">itdc</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span><span class="n">itdc</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">//check for ffff&#39;s</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f3</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f4</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">point</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">f3</span> <span class="o">==</span> <span class="mh">0xffff</span> <span class="o">&amp;&amp;</span> <span class="n">f4</span> <span class="o">==</span> <span class="mh">0xffff</span><span class="p">)</span> 
+    <span class="p">{</span>
+      <span class="c1">// cout &lt;&lt; &quot;no Csi TDC&quot; &lt;&lt; endl;</span>
+      <span class="n">point</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="k">continue</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">point</span> <span class="o">=</span> <span class="n">TDC</span><span class="o">-&gt;</span><span class="n">read</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>  <span class="c1">// suck out the info in the tdc</span>
+
+    <span class="c1">// if(TDC-&gt;notTDCerror){ cout &lt;&lt; eventNum &lt;&lt; endl; return false;}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">TDC</span><span class="o">-&gt;</span><span class="n">Ndata</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">TDC</span><span class="o">-&gt;</span><span class="n">dataOut</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">channel</span><span class="p">;</span>
+      <span class="kt">int</span> <span class="n">itime</span> <span class="o">=</span> <span class="n">TDC</span><span class="o">-&gt;</span><span class="n">dataOut</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span><span class="p">;</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">DataT</span><span class="p">[</span><span class="n">NT</span><span class="p">].</span><span class="n">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+        <span class="n">DataT</span><span class="p">[</span><span class="n">NT</span><span class="p">].</span><span class="n">itime</span> <span class="o">=</span> <span class="n">itime</span><span class="p">;</span>
+        <span class="n">NT</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">24</span><span class="p">)</span> <span class="c1">//24</span>
+      <span class="p">{</span>
+        <span class="n">T_RFSCIN</span> <span class="o">=</span> <span class="n">itime</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">21</span><span class="p">)</span> <span class="c1">//21</span>
+      <span class="p">{</span>
+        <span class="n">T_A1900</span> <span class="o">=</span> <span class="n">itime</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">23</span><span class="p">)</span> <span class="c1">//23</span>
+      <span class="p">{</span>
+        <span class="n">T_RFCYC</span> <span class="o">=</span> <span class="n">itime</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">27</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">T_CsiTrig</span> <span class="o">=</span> <span class="n">itime</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">//check for ffff&#39;s</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f1</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+    <span class="n">point</span><span class="o">++</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f2</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+    <span class="n">point</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">f1</span> <span class="o">!=</span> <span class="mh">0xffff</span> <span class="o">&amp;&amp;</span> <span class="n">f2</span> <span class="o">!=</span> <span class="mh">0xffff</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;did not read CsI TDC correctly&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="p">}</span>
+  <span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">stat</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="hira::unpackFiber()">hira::unpackFiber()<a class="anchor-link" href="#hira::unpackFiber()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>读取两个fiber各4个角和一个打拿极共10路QDC信号。</li>
+<li>run113及之前的run对PMT设置的高压和增益不同，因此QDC信号的pedestal不同。对不同的run设置不同的pedestal中心值和sigma值。阈值设置为5$\sigma$</li>
+<li>将QDC原始道址加上随机数，再减去pedestal的中心值，存储在XYmon类中。</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>caen::read 读取QDC数据</li>
+<li>XYmon::make_2d_v2 根据PMT ABCD四个角的电荷值计算粒子入射在fiber上的位置。</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>hira::unpack()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">hira</span><span class="o">::</span><span class="n">unpackFiber</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*&amp;</span><span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f3</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f4</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">point</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// check to see if there in no data first</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">f3</span> <span class="o">==</span> <span class="mh">0xffff</span> <span class="o">&amp;&amp;</span> <span class="n">f4</span> <span class="o">==</span> <span class="mh">0xffff</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">point</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">//suck out qdc info</span>
+  <span class="n">QDC</span><span class="p">.</span><span class="n">number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">point</span> <span class="o">=</span> <span class="n">QDC</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">QDC</span><span class="p">.</span><span class="n">number</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">QDC</span><span class="p">.</span><span class="n">underflow</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">QDC</span><span class="p">.</span><span class="n">overflow</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">QDC</span><span class="p">.</span><span class="n">channel</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">ienergy</span> <span class="o">=</span> <span class="n">QDC</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+    <span class="c1">// cout &lt;&lt; id &lt;&lt; &quot; &quot; &lt;&lt; ienergy &lt;&lt; endl;</span>
+    <span class="kt">float</span> <span class="n">pvA</span><span class="p">,</span> <span class="n">pvB</span><span class="p">,</span> <span class="n">pvC</span><span class="p">,</span> <span class="n">pvD</span><span class="p">,</span> <span class="n">pvdyn</span><span class="p">,</span> <span class="n">phA</span><span class="p">,</span> <span class="n">phB</span><span class="p">,</span> <span class="n">phC</span><span class="p">,</span> <span class="n">phD</span><span class="p">,</span> <span class="n">phdyn</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">runno</span><span class="o">&lt;=</span><span class="mi">113</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">pvA</span> <span class="o">=</span> <span class="mf">237.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thA</span> <span class="o">=</span> <span class="mf">18.</span><span class="p">;</span>
+      <span class="n">pvB</span> <span class="o">=</span> <span class="mf">256.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thB</span> <span class="o">=</span> <span class="mf">17.</span><span class="p">;</span>
+      <span class="n">pvC</span> <span class="o">=</span> <span class="mf">259.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thC</span> <span class="o">=</span> <span class="mf">18.</span><span class="p">;</span>
+      <span class="n">pvD</span> <span class="o">=</span> <span class="mf">239.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thD</span> <span class="o">=</span> <span class="mf">20.</span><span class="p">;</span>
+      <span class="n">pvdyn</span> <span class="o">=</span> <span class="mf">220.</span><span class="p">;</span>
+      <span class="n">phA</span> <span class="o">=</span> <span class="mf">239.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thA</span> <span class="o">=</span> <span class="mf">18.</span><span class="p">;</span>
+      <span class="n">phB</span> <span class="o">=</span> <span class="mf">222.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thB</span> <span class="o">=</span> <span class="mf">18.</span><span class="p">;</span>
+      <span class="n">phC</span> <span class="o">=</span> <span class="mf">228.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thC</span> <span class="o">=</span> <span class="mf">17.</span><span class="p">;</span>
+      <span class="n">phD</span> <span class="o">=</span> <span class="mf">231.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thD</span> <span class="o">=</span> <span class="mf">17.</span><span class="p">;</span>
+      <span class="n">phdyn</span> <span class="o">=</span> <span class="mf">238.</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="n">pvA</span> <span class="o">=</span> <span class="mf">239.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thA</span> <span class="o">=</span> <span class="mf">14.</span><span class="p">;</span>
+      <span class="n">pvB</span> <span class="o">=</span> <span class="mf">256.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thB</span> <span class="o">=</span> <span class="mf">12.</span><span class="p">;</span>
+      <span class="n">pvC</span> <span class="o">=</span> <span class="mf">260.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thC</span> <span class="o">=</span> <span class="mf">10.</span><span class="p">;</span>
+      <span class="n">pvD</span> <span class="o">=</span> <span class="mf">240.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">thD</span> <span class="o">=</span> <span class="mf">10.</span><span class="p">;</span>
+      <span class="n">pvdyn</span> <span class="o">=</span> <span class="mf">217.</span><span class="p">;</span>
+      <span class="n">phA</span> <span class="o">=</span> <span class="mf">238.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thA</span> <span class="o">=</span> <span class="mf">27.</span><span class="p">;</span>
+      <span class="n">phB</span> <span class="o">=</span> <span class="mf">215.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thB</span> <span class="o">=</span> <span class="mf">29.</span><span class="p">;</span>
+      <span class="n">phC</span> <span class="o">=</span> <span class="mf">220.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thC</span> <span class="o">=</span> <span class="mf">29.</span><span class="p">;</span>
+      <span class="n">phD</span> <span class="o">=</span> <span class="mf">226.</span><span class="p">;</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">thD</span> <span class="o">=</span> <span class="mf">26.</span><span class="p">;</span>
+      <span class="n">phdyn</span> <span class="o">=</span> <span class="mf">235.</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">//Blue</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">dynode</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">phdyn</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">phA</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">phB</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">phC</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">horz</span><span class="p">.</span><span class="n">D</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">phD</span><span class="p">;</span>
+
+    <span class="c1">//Red</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">dynode</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span><span class="o">-</span> <span class="n">pvdyn</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">6</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">pvA</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">7</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">pvB</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">pvC</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="mi">9</span><span class="p">)</span> <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">vert</span><span class="p">.</span><span class="n">D</span> <span class="o">=</span> <span class="n">ienergy</span> <span class="o">+</span> <span class="n">ran</span><span class="o">-&gt;</span><span class="n">Rndm</span><span class="p">()</span> <span class="o">-</span> <span class="n">pvD</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">make_2d_v2</span><span class="p">();</span>
+
+  <span class="c1">//check for ffff&#39;s</span>
+  <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f1</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+  <span class="n">point</span><span class="o">++</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">f2</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="p">;</span>
+  <span class="n">point</span><span class="o">++</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">f1</span> <span class="o">!=</span> <span class="mh">0xffff</span> <span class="o">&amp;&amp;</span> <span class="n">f2</span> <span class="o">!=</span> <span class="mh">0xffff</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;didnt read right&quot;</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 
 </div>
 </div>

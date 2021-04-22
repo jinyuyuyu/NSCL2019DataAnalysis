@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>sort-cpp</title>
+<title>det</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13117,16 +13117,21 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#class-det" data-toc-modified-id="class-det-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>class <code>det</code></a></span><ul class="toc-item"><li><span><a href="#变量定义" data-toc-modified-id="变量定义-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>变量定义</a></span></li><li><span><a href="#函数定义" data-toc-modified-id="函数定义-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>函数定义</a></span></li></ul></li><li><span><a href="#det::det()" data-toc-modified-id="det::det()-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>det::det()</a></span></li><li><span><a href="#det::unpack()" data-toc-modified-id="det::unpack()-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>det::unpack()</a></span></li><li><span><a href="#det::analyze()" data-toc-modified-id="det::analyze()-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>det::analyze()</a></span></li><li><span><a href="#det::LoadS800toSolution()" data-toc-modified-id="det::LoadS800toSolution()-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>det::LoadS800toSolution()</a></span></li><li><span><a href="#det::corr_xx-(19Mg,-18Mg,-16Ne-...)" data-toc-modified-id="det::corr_xx-(19Mg,-18Mg,-16Ne-...)-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>det::corr_xx (19Mg, 18Mg, 16Ne ...)</a></span></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
-<p>description: main function</p>
-<p>version: 200911v11</p>
+<h1 id="class-det">class <code>det</code><a class="anchor-link" href="#class-det">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>code: det.h det.cpp</p>
 
 </div>
 </div>
@@ -13134,44 +13139,153 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
-<li><p>读取原始数据，并进行初步的数据解码。</p>
-<ul>
-<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>调用顶层类<code>det</code>进行数据分析。</p>
-<ul>
-<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
-<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
+<h2 id="&#21464;&#37327;&#23450;&#20041;">&#21464;&#37327;&#23450;&#20041;<a class="anchor-link" href="#&#21464;&#37327;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">hira</span> <span class="o">*</span><span class="n">Hira</span><span class="p">;</span>
+<span class="n">S800</span> <span class="o">*</span><span class="n">s800</span><span class="p">;</span>
 
-<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
+<span class="n">CLosses</span> <span class="o">*</span><span class="n">losses_fiber</span><span class="p">;</span>
+<span class="n">CLosses</span> <span class="o">*</span><span class="n">losses</span><span class="p">;</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
+<span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span><span class="p">;</span>
+<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span><span class="p">;</span>
+
+<span class="n">correl2</span> <span class="n">Correl2</span><span class="p">;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20989;&#25968;&#23450;&#20041;">&#20989;&#25968;&#23450;&#20041;<a class="anchor-link" href="#&#20989;&#25968;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">det</span><span class="p">(</span><span class="n">histo_sort</span><span class="o">*</span> <span class="n">Histo_sort</span><span class="p">,</span><span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span><span class="p">);</span>
+<span class="o">~</span><span class="n">det</span><span class="p">();</span>
+<span class="kt">bool</span> <span class="nf">unpack</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*</span><span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">,</span><span class="kt">int</span> <span class="n">sourceID</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">Reset</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">analyze</span><span class="p">(</span><span class="kt">int</span> <span class="n">event</span><span class="p">,</span> <span class="kt">int</span> <span class="n">run</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">LoadS800toSolution</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_18Mg</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_19Mg</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_20Al</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_16Ne</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_17Na</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_18Na</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_6Be</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_17Ne</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">corr_19Mg4p</span><span class="p">();</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="det::det()">det::det()<a class="anchor-link" href="#det::det()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>hira::hira</li>
+<li>S800::S800</li>
+<li>CLosses::CLosses</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">det</span><span class="o">::</span><span class="n">det</span><span class="p">(</span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo0</span><span class="p">,</span><span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo1</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
-  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
-  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+  <span class="n">type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">Histo_read</span> <span class="o">=</span> <span class="n">Histo1</span><span class="p">;</span>
+  <span class="n">Histo_sort</span> <span class="o">=</span> <span class="n">Histo0</span><span class="p">;</span>
+  <span class="n">ran</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TRandom</span><span class="p">;</span>
+  <span class="n">Hira</span> <span class="o">=</span> <span class="k">new</span> <span class="n">hira</span><span class="p">(</span><span class="n">ran</span><span class="p">,</span><span class="n">Histo_sort</span><span class="p">,</span><span class="n">Histo_read</span><span class="p">);</span>
+  <span class="n">s800</span> <span class="o">=</span> <span class="k">new</span> <span class="n">S800</span><span class="p">(</span><span class="n">ran</span><span class="p">,</span><span class="n">Histo_sort</span><span class="p">,</span><span class="n">Histo_read</span><span class="p">);</span>
+
+  <span class="c1">//loading energy loss tables for 9Be target</span>
+  <span class="n">losses</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CLosses</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&quot;.loss&quot;</span><span class="p">);</span>
+  <span class="c1">//loading energy loss tables for fiber</span>
+  <span class="n">losses_fiber</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CLosses</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&quot;_fiber.loss&quot;</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
-<ol>
-<li><p>输出</p>
-<ul>
-<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
-<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
 
-<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
-<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="det::unpack()">det::unpack()<a class="anchor-link" href="#det::unpack()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>根据sort.cpp中解码的source id 判断信号来自靶室探测器(Hira)还是S800，然后分别调用hira和S800类中的unpack函数进行原始数据解码。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>hira::unpack</li>
+<li>S800::unpack</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">det</span><span class="o">::</span><span class="n">unpack</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*</span><span class="n">point</span><span class="p">,</span><span class="kt">int</span> <span class="n">runno</span><span class="p">,</span><span class="kt">int</span> <span class="n">sourceID</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">unsigned</span> <span class="kt">short</span>  <span class="n">words</span> <span class="o">=</span> <span class="o">*</span><span class="n">point</span><span class="o">++</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">sourceID</span> <span class="o">==</span> <span class="n">SiID</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">point</span> <span class="o">+=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">//This skips the SIS3820 information which is already in the timestamp</span>
+    <span class="n">stat</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stat</span><span class="p">)</span> <span class="k">return</span> <span class="n">stat</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sourceID</span> <span class="o">==</span> <span class="n">S800ID</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">stat</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;found unexpected sourceID = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sourceID</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">stat</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">stat</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 
 </div>
@@ -13180,14 +13294,356 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
+<h1 id="det::analyze()">det::analyze()<a class="anchor-link" href="#det::analyze()">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
+<ol>
+<li><p>为不同的run设置不同的剩余核pid cut和inverse map；</p>
+</li>
+<li><p>判断pid和trigger，调用S800和ringCounter的分析函数来进行物理分析，把探测到的质子和剩余核信息组合，重建母核信息。</p>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>correl2.reset</li>
+<li>S800::analyze</li>
+<li>ringCounter::analysis</li>
+<li>det::LoadS800toSolution</li>
+<li>correl2::load</li>
+<li>det::corr_xx (19Mg, 18Mg, 16Ne ...)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">det</span><span class="o">::</span><span class="n">analyze</span><span class="p">(</span><span class="kt">int</span> <span class="n">event</span><span class="p">,</span> <span class="kt">int</span> <span class="n">run</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">//S800 对准17Ne和14O时分别使用不同的S800 pid cut。</span>
+  <span class="k">if</span><span class="p">((</span><span class="n">run</span> <span class="o">&gt;=</span><span class="mi">90</span> <span class="o">&amp;&amp;</span> <span class="n">run</span> <span class="o">&lt;=</span> <span class="mi">106</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">run</span> <span class="o">&gt;=</span><span class="mi">425</span> <span class="o">&amp;&amp;</span> <span class="n">run</span> <span class="o">&lt;=</span><span class="mi">432</span><span class="p">))</span> <span class="c1">//Ne17 setting</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid_Ne17</span><span class="p">;</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">brho</span> <span class="o">=</span> <span class="mf">2.426</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="c1">//if(run &gt;=113 &amp;&amp; run &lt;=458) //O14 setting</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid_O14</span><span class="p">;</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">brho</span> <span class="o">=</span> <span class="mf">2.5156</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// S800对准17Ne和14O的不同设置下，计算14O和17Ne剩余核的动能和角度时，分别使用不同的inverse map（因为磁铁电流不同）</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">run</span><span class="o">&gt;=</span><span class="mi">90</span><span class="o">&amp;&amp;</span><span class="n">run</span><span class="o">&lt;=</span><span class="mi">106</span><span class="p">)</span> <span class="c1">//17Ne early runs</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17_Ne17_1</span><span class="p">;</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17_O14_1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">run</span><span class="o">&gt;=</span><span class="mi">113</span><span class="o">&amp;&amp;</span><span class="n">run</span><span class="o">&lt;=</span><span class="mi">424</span><span class="p">)</span> <span class="c1">//14O early runs</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14_Ne17_1</span><span class="p">;</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14_O14_1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">run</span><span class="o">&gt;=</span><span class="mi">425</span><span class="o">&amp;&amp;</span><span class="n">run</span><span class="o">&lt;=</span><span class="mi">432</span><span class="p">)</span> <span class="c1">//17Ne later runs</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17_Ne17_2</span><span class="p">;</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17_O14_2</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">run</span><span class="o">&gt;=</span><span class="mi">438</span><span class="o">&amp;&amp;</span><span class="n">run</span><span class="o">&lt;=</span><span class="mi">458</span><span class="p">)</span> <span class="c1">//14O later runs</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_Ne17</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14_Ne17_2</span><span class="p">;</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">map_O14_O14_2</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Correl2</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+  <span class="kt">bool</span> <span class="n">foundresidue</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="c1">//判断trigger模式：s800_singles为S800单独提供trigger，singles为CsI单独提供trigger，coin是S800和CsI的符合trigger。</span>
+  <span class="n">s800_results</span> <span class="n">S800_results</span><span class="p">;</span>
+  <span class="n">S800_results</span><span class="p">.</span><span class="n">trig_coin</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+  <span class="n">S800_results</span><span class="p">.</span><span class="n">trig_singles</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+  <span class="n">S800_results</span><span class="p">.</span><span class="n">trig_s800_singles</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">s800</span><span class="o">-&gt;</span><span class="n">Trig</span><span class="p">.</span><span class="n">registr</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">S800_results</span><span class="p">.</span><span class="n">trig_s800_singles</span> <span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">s800</span><span class="o">-&gt;</span><span class="n">Trig</span><span class="p">.</span><span class="n">registr</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span> <span class="n">S800_results</span><span class="p">.</span><span class="n">trig_coin</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">s800</span><span class="o">-&gt;</span><span class="n">Trig</span><span class="p">.</span><span class="n">registr</span> <span class="o">&amp;</span> <span class="mi">16</span><span class="p">)</span> <span class="n">S800_results</span><span class="p">.</span><span class="n">trig_singles</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+  <span class="n">S800_results</span><span class="p">.</span><span class="n">Zbeam</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">S800_results</span><span class="p">.</span><span class="n">Abeam</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">S800_results</span><span class="p">.</span><span class="n">Zresidue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">S800_results</span><span class="p">.</span><span class="n">Aresidue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">S800_results</span><span class="p">.</span><span class="n">trig_s800_singles</span><span class="p">)</span> <span class="c1">//This is mostly for mask runs and unreacted beam</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">analyze</span><span class="p">();</span> <span class="c1">// 分析S800数据</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Zbeam</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="p">;</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Abeam</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="p">;</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Zresidue</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="p">;</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Aresidue</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">S800_results</span><span class="p">.</span><span class="n">trig_coin</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">s800</span><span class="o">-&gt;</span><span class="n">analyze</span><span class="p">();</span> <span class="c1">// 分析S800数据</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Zbeam</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="p">;</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Abeam</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">beam_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="p">;</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Zresidue</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="p">;</span>
+    <span class="n">S800_results</span><span class="p">.</span><span class="n">Aresidue</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">analysis</span><span class="p">(</span><span class="n">S800_results</span><span class="p">);</span> <span class="c1">//分析靶室探测器的数据，S800_results类是ringCounter类中的struct，存储S800的pid和trigger信息</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Nsolution</span><span class="o">==</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="n">S800_results</span><span class="p">.</span><span class="n">trig_coin</span><span class="o">||</span><span class="n">S800_results</span><span class="p">.</span><span class="n">trig_singles</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span> <span class="c1">//靶室探测器未探测到粒子时return</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">S800_results</span><span class="p">.</span><span class="n">Zresidue</span> <span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">//S800探测到的末态粒子不在pid cut范围内时return</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">S800_results</span><span class="p">.</span><span class="n">Zbeam</span> <span class="o">==</span><span class="mi">12</span> <span class="o">&amp;&amp;</span> <span class="n">S800_results</span><span class="p">.</span><span class="n">Abeam</span> <span class="o">==</span><span class="mi">20</span><span class="p">)</span> <span class="c1">//目前只处理入射次级束是20Mg的结果</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">s800</span><span class="o">-&gt;</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">theta</span><span class="o">==-</span><span class="mi">65000</span> <span class="o">||</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">phi</span><span class="o">==-</span><span class="mi">65000</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">//S800处理没有得到正常信号时return，这里要检查</span>
+
+    <span class="n">LoadS800toSolution</span><span class="p">();</span> <span class="c1">//把S800探测到的末态粒子添加到solution类存储的粒子列表中</span>
+    <span class="n">foundresidue</span> <span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">foundresidue</span><span class="p">)</span> <span class="c1">//调用correl2类进行母核信息的重建</span>
+  <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Nsolution</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Correl2</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span> <span class="c1">//将粒子信息(solution)导入correl2类中</span>
+    <span class="p">}</span>
+    <span class="n">corr_19Mg</span><span class="p">();</span>
+    <span class="n">corr_18Mg</span><span class="p">();</span>
+    <span class="n">corr_16Ne</span><span class="p">();</span>
+    <span class="n">corr_17Na</span><span class="p">();</span>
+    <span class="n">corr_18Na</span><span class="p">();</span>
+    <span class="n">corr_20Al</span><span class="p">();</span>
+    <span class="n">corr_19Mg4p</span><span class="p">();</span>
+    <span class="n">corr_17Ne</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="det::LoadS800toSolution()">det::LoadS800toSolution()<a class="anchor-link" href="#det::LoadS800toSolution()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>把S800探测到的末态粒子添加到solution类存储的列表中。<ul>
+<li>粒子信息：pid、角度、位置、能量、质量、动量、速度</li>
+<li>粒子角度使用fiber探测结果</li>
+<li>加回core在fiber和靶里的能损，其中fiber使用BC400的能损文件，靶里能损仅加回1/2靶厚的能损。</li>
+<li>为了将Erel-cosThetaC趋势调成水平，将core的动能再加 8MeV。</li>
+</ul>
+</li>
+<li><p>调用的其他函数：CLosses::getEin()</p>
+</li>
+<li><p>被其他函数调用：det::analyze()</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">LoadS800toSolution</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">float</span> <span class="n">thetaf</span><span class="p">,</span> <span class="n">phif</span><span class="p">;</span>
+
+  <span class="c1">//using the theta phi from the fiber</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">has_data</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">//cout &lt;&lt; &quot;fiber didn&#39;t give right angles&quot; &lt;&lt; endl;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">thetaf</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">theta</span><span class="p">;</span>
+  <span class="n">phif</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">phi</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="n">Nsol</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Nsolution</span><span class="p">;</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Nsolution</span><span class="o">++</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">A</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="p">;</span>
+
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">iZ</span> <span class="o">=</span> <span class="n">Z</span><span class="p">;</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">iA</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
+
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">theta</span> <span class="o">=</span> <span class="n">thetaf</span><span class="p">;</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">phi</span> <span class="o">=</span> <span class="n">phif</span><span class="p">;</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Xpos</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">;</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Ypos</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">XY_mon</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">;</span>
+
+  <span class="kt">float</span> <span class="n">ekin</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">energy</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">thickness</span> <span class="o">=</span> <span class="mf">54.1</span><span class="o">/</span><span class="n">cos</span><span class="p">(</span><span class="n">thetaf</span><span class="p">);</span> <span class="c1">//BC400</span>
+  <span class="n">ekin</span> <span class="o">=</span> <span class="n">losses_fiber</span><span class="o">-&gt;</span><span class="n">getEin</span><span class="p">(</span><span class="n">ekin</span><span class="p">,</span><span class="n">thickness</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+  <span class="kt">float</span> <span class="n">thick</span> <span class="o">=</span> <span class="mf">184.8</span><span class="o">/</span><span class="mf">2.</span><span class="o">/</span><span class="n">cos</span><span class="p">(</span><span class="n">thetaf</span><span class="p">);</span> <span class="c1">//0.5mm 9Be</span>
+  <span class="n">ekin</span> <span class="o">=</span> <span class="n">losses</span><span class="o">-&gt;</span><span class="n">getEin</span><span class="p">(</span><span class="n">ekin</span><span class="p">,</span><span class="n">thick</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Ekin</span> <span class="o">=</span> <span class="n">ekin</span><span class="o">+</span><span class="mi">8</span><span class="p">;</span>
+
+  <span class="kt">double</span> <span class="n">mass</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">getMass</span><span class="p">(</span><span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">Z</span><span class="p">,</span><span class="n">s800</span><span class="o">-&gt;</span><span class="n">residue_pid</span><span class="o">-&gt;</span><span class="n">A</span><span class="p">);</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">mass</span> <span class="o">=</span> <span class="n">mass</span><span class="o">*</span><span class="mf">931.494</span>
+    <span class="o">-</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">iZ</span><span class="o">*</span><span class="mf">0.511</span><span class="p">;</span>
+
+  <span class="kt">float</span> <span class="n">momentum</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Kinematics</span><span class="p">.</span>
+    <span class="n">getMomentum</span><span class="p">(</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Ekin</span><span class="p">,</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">mass</span><span class="p">);</span>
+
+  <span class="kt">float</span> <span class="n">ptot</span> <span class="o">=</span> <span class="n">s800</span><span class="o">-&gt;</span><span class="n">track</span><span class="o">-&gt;</span><span class="n">ptot</span><span class="p">;</span> <span class="c1">//No longer used</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">momentum</span> <span class="o">=</span> <span class="n">momentum</span><span class="p">;</span>
+
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Mvect</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">momentum</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">thetaf</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">phif</span><span class="p">);</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Mvect</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">momentum</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">thetaf</span><span class="p">)</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">phif</span><span class="p">);</span>
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Mvect</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">momentum</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">thetaf</span><span class="p">);</span>
+
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">energyTot</span> <span class="o">=</span> <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">mass</span> <span class="o">+</span> 
+    <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">Ekin</span><span class="p">;</span>
+
+  <span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">momentum</span><span class="o">/</span><span class="n">Hira</span><span class="o">-&gt;</span><span class="n">RingCounter</span><span class="o">-&gt;</span><span class="n">Solution</span><span class="p">[</span><span class="n">Nsol</span><span class="p">].</span><span class="n">energyTot</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="det::corr_xx-(19Mg,-18Mg,-16Ne-...)">det::corr_xx (19Mg, 18Mg, 16Ne ...)<a class="anchor-link" href="#det::corr_xx-(19Mg,-18Mg,-16Ne-...)">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>因为不同母核的重建代码都大同小异，这里仅以det::corr_16Ne()为例。</li>
+<li>不变质量谱重建<ul>
+<li>correl2类中的每个粒子都有一个mask变量，当mask为1时表示参与重建Erel；如果要计算Jacobi关联，则将其中一个粒子mask设为0，另外两个粒子mask设为1，只计算这两个粒子的子体系的相对能。</li>
+<li>correl2类的zeroMask()函数用于将所有粒子的mask重置为0，makeArray()函数用于将mask为1的粒子放入数组中用于findErel()。</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>调用的其他函数：</p>
+<ul>
+<li>correl2::zeroMask()</li>
+<li>correl2::makeArray()</li>
+<li>correl2::findErel()</li>
+</ul>
+<p>被其他函数调用：</p>
+<ul>
+<li>det::analyze()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">det</span><span class="o">::</span><span class="n">corr_16Ne</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">//2p + 14O</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Correl2</span><span class="p">.</span><span class="n">proton</span><span class="p">.</span><span class="n">mult</span> <span class="o">==</span><span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">O14</span><span class="p">.</span><span class="n">mult</span> <span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">reconZ</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">reconA</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="k">const</span> <span class="n">Q16Ne</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.466</span><span class="p">;</span>
+    <span class="c1">//关键片段 ==========</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">zeroMask</span><span class="p">();</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">proton</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">proton</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">O14</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> 
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">makeArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">Erel_16Ne</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">findErel</span><span class="p">();</span>
+    <span class="c1">// ==================</span>
+    <span class="n">Erel</span> <span class="o">=</span> <span class="n">Erel_16Ne</span><span class="p">;</span>
+    <span class="n">Nfrags</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">N</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Correl2</span><span class="p">.</span><span class="n">N</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">energyCM</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">frag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">energyCM</span><span class="p">;</span>
+      <span class="n">Afrag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">frag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">iA</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">float</span> <span class="n">Ex</span> <span class="o">=</span> <span class="n">Erel_16Ne</span> <span class="o">+</span> <span class="n">Q16Ne</span><span class="p">;</span>
+    <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">Erel_16Ne_2p14O</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">Erel_16Ne</span><span class="p">);</span>
+    <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">Ex_16Ne_2p14O</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">Ex</span><span class="p">);</span>
+    <span class="n">vCM</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">velocityCM</span><span class="p">;</span>
+    <span class="n">thetaCM</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">thetaCM</span> <span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">);</span>
+    <span class="n">phiCM</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">phiCM</span> <span class="o">*</span><span class="mf">180.</span><span class="o">/</span><span class="n">acos</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">theta_p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">theta_p</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">cosThetaCcm</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">cosThetaCcm</span><span class="p">;</span>
+    <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">VCM_16Ne_2p14O</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">vCM</span><span class="p">);</span>
+    <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">ThetaCM_16Ne_2p14O</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">thetaCM</span><span class="p">);</span>
+    <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">cosThetaC_16Ne</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">cosThetaCcm</span><span class="p">);</span>
+    <span class="n">cosThetaClab</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">cosThetaClab</span><span class="p">;</span>
+
+    <span class="c1">//Get relative energy between the core and protons</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">theta</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">proton</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">makeArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">Erel1p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">findErel</span><span class="p">();</span>
+    <span class="n">epsilonY</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Erel1p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">Erel_16Ne</span><span class="p">;</span>
+    <span class="n">theta_HI_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">theta</span><span class="p">;</span>
+
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">proton</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">proton</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">makeArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">Erel1p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">findErel</span><span class="p">();</span>
+    <span class="n">epsilonY</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Erel1p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">Erel_16Ne</span><span class="p">;</span>
+    <span class="n">theta_HI_p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">theta</span><span class="p">;</span>
+
+    <span class="c1">//Get the relative energy betweeen the protons</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">proton</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">O14</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">makeArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">epsilonT</span>  <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">findErel</span><span class="p">()</span><span class="o">/</span><span class="n">Erel_16Ne</span><span class="p">;</span>
+    <span class="n">theta_p1_p2</span> <span class="o">=</span> <span class="n">Correl2</span><span class="p">.</span><span class="n">theta</span><span class="p">;</span>
+
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">O14</span><span class="p">.</span><span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">makeArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">findErel</span><span class="p">();</span>
+    <span class="n">Correl2</span><span class="p">.</span><span class="n">getJacobi</span><span class="p">();</span>
+
+    <span class="c1">//Gate on Ground state</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Ex</span> <span class="o">&lt;</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">Jacobi_T_16Ne_gs</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">epsilonT</span><span class="p">,</span><span class="n">Correl2</span><span class="p">.</span><span class="n">cosThetaT</span><span class="p">);</span>
+      <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">Jacobi_T_16Ne_gs</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">epsilonT</span><span class="p">,</span><span class="o">-</span><span class="n">Correl2</span><span class="p">.</span><span class="n">cosThetaT</span><span class="p">);</span>
+
+      <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">Jacobi_Y_16Ne_gs</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">epsilonY</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">Correl2</span><span class="p">.</span><span class="n">cosThetaY</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+      <span class="n">Histo_read</span><span class="o">-&gt;</span><span class="n">Jacobi_Y_16Ne_gs</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">epsilonY</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">Correl2</span><span class="p">.</span><span class="n">cosThetaY</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
 </div>
 </div>

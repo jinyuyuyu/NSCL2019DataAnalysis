@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>sort-cpp</title>
+<title>elist</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13117,16 +13117,21 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
-<div class="toc"><ul class="toc-item"><li><span><a href="#sort.cpp" data-toc-modified-id="sort.cpp-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>sort.cpp</a></span><ul class="toc-item"><li><span><a href="#程序功能" data-toc-modified-id="程序功能-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>程序功能</a></span></li><li><span><a href="#程序结构" data-toc-modified-id="程序结构-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>程序结构</a></span></li></ul></li></ul></div>
+<div class="toc"><ul class="toc-item"><li><span><a href="#class-elist" data-toc-modified-id="class-elist-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>class <code>elist</code></a></span><ul class="toc-item"><li><span><a href="#struct定义" data-toc-modified-id="struct定义-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>struct定义</a></span></li><li><span><a href="#变量定义" data-toc-modified-id="变量定义-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>变量定义</a></span></li><li><span><a href="#函数定义" data-toc-modified-id="函数定义-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>函数定义</a></span></li></ul></li><li><span><a href="#elist::Add()" data-toc-modified-id="elist::Add()-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>elist::Add()</a></span></li><li><span><a href="#elist::AddN()" data-toc-modified-id="elist::AddN()-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>elist::AddN()</a></span></li><li><span><a href="#elist::Remove()" data-toc-modified-id="elist::Remove()-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>elist::Remove()</a></span></li><li><span><a href="#elist::NeighboursNew()" data-toc-modified-id="elist::NeighboursNew()-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>elist::NeighboursNew()</a></span></li><li><span><a href="#elist::Threshold()" data-toc-modified-id="elist::Threshold()-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>elist::Threshold()</a></span></li><li><span><a href="#elist::MaxEnergyCut" data-toc-modified-id="elist::MaxEnergyCut-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>elist::MaxEnergyCut</a></span></li><li><span><a href="#elist::MaxNeighboursNew" data-toc-modified-id="elist::MaxNeighboursNew-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>elist::MaxNeighboursNew</a></span></li><li><span><a href="#elist::badstrip" data-toc-modified-id="elist::badstrip-9"><span class="toc-item-num">9&nbsp;&nbsp;</span>elist::badstrip</a></span></li><li><span><a href="#elist::badstrippair" data-toc-modified-id="elist::badstrippair-10"><span class="toc-item-num">10&nbsp;&nbsp;</span>elist::badstrippair</a></span></li></ul></div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="sort.cpp">sort.cpp<a class="anchor-link" href="#sort.cpp">&#182;</a></h1><p>code: sort.cpp</p>
-<p>description: main function</p>
-<p>version: 200911v11</p>
+<h1 id="class-elist">class <code>elist</code><a class="anchor-link" href="#class-elist">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>code: sort/tree200911/elist.cpp</p>
 
 </div>
 </div>
@@ -13134,44 +13139,229 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#21151;&#33021;">&#31243;&#24207;&#21151;&#33021;<a class="anchor-link" href="#&#31243;&#24207;&#21151;&#33021;">&#182;</a></h2><ol>
-<li><p>读取原始数据，并进行初步的数据解码。</p>
-<ul>
-<li>数据结构说明：见NSCLDAQ 11.0 event filter说明  <a href="http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html">http://docs.nscl.msu.edu/daq/newsite/nscldaq-11.2/index.html</a></li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>调用顶层类<code>det</code>进行数据分析。</p>
-<ul>
-<li>det::unpack()，用于各个探测器raw data的解码和简单刻度。</li>
-<li>det::analyze()，将所有探测器的测量量关联起来，构建末态粒子信息和重建母核信息。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">det</span> <span class="nf">Det</span><span class="p">(</span><span class="n">Histo_sort</span><span class="p">,</span> <span class="n">Histo_read</span><span class="p">);</span>
-
-<span class="kt">bool</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">Det</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">runno</span><span class="p">,</span><span class="n">fragmentsourceID</span><span class="p">[</span><span class="n">nFragment</span><span class="p">]);</span>
-
-<span class="k">if</span> <span class="p">(</span><span class="n">foundS800</span> <span class="o">||</span> <span class="n">foundSecondary</span><span class="p">)</span> 
+<h2 id="struct&#23450;&#20041;">struct&#23450;&#20041;<a class="anchor-link" href="#struct&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">order</span>
 <span class="p">{</span>
-  <span class="n">Det</span><span class="p">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">);</span>
-  <span class="n">ntree</span><span class="p">.</span><span class="n">SetVal</span><span class="p">(</span><span class="n">physicsEvent</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">Det</span><span class="p">);</span> <span class="c1">//填充tree</span>
-  <span class="n">tree</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span>
+  <span class="kt">float</span> <span class="n">energy</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">energyR</span><span class="p">;</span>  <span class="c1">// high gain channels</span>
+  <span class="kt">float</span> <span class="n">energyRlow</span><span class="p">;</span>  <span class="c1">//low channels</span>
+  <span class="kt">float</span> <span class="n">energylow</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">energyMax</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">energyCsI</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">strip</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">overflow</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">neighbours</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">time</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">imatch</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">theta</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">phi</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">io</span><span class="p">;</span> <span class="c1">//1 for inner, 2 for outer, 3 for both, 0 for initial</span>
+  <span class="kt">int</span> <span class="n">ptype</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">rtype</span><span class="p">;</span>
+    <span class="c1">//float En1; //energy of max neighbour</span>
+    <span class="c1">//float En2; //energy of min neighbour</span>
+<span class="p">};</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#21464;&#37327;&#23450;&#20041;">&#21464;&#37327;&#23450;&#20041;<a class="anchor-link" href="#&#21464;&#37327;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">int</span> <span class="k">const</span> <span class="n">nnn</span><span class="o">=</span><span class="mi">128</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">Nstore</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//number stored in list</span>
+<span class="n">order</span> <span class="n">Order</span><span class="p">[</span><span class="n">nnn</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">mult</span><span class="p">;</span>
+<span class="kt">float</span> <span class="n">threshold0</span><span class="p">;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20989;&#25968;&#23450;&#20041;">&#20989;&#25968;&#23450;&#20041;<a class="anchor-link" href="#&#20989;&#25968;&#23450;&#20041;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">);</span>                    <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">);</span>              <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">float</span><span class="p">);</span>             <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">float</span><span class="p">);</span><span class="c1">//used</span>
+<span class="kt">void</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>                   <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">AddN</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">float</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">float</span><span class="p">);</span><span class="c1">//used</span>
+<span class="kt">void</span> <span class="nf">Remove</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span><span class="c1">//used</span>
+<span class="kt">int</span>  <span class="nf">Reduce</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">);</span>                             <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">reset</span><span class="p">();</span><span class="c1">//used</span>
+<span class="kt">void</span> <span class="nf">Neighbours</span><span class="p">();</span>                              <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">NeighboursNew</span><span class="p">();</span><span class="c1">//used</span>
+<span class="kt">void</span> <span class="nf">NeighboursPies</span><span class="p">();</span>                          <span class="c1">//unused</span>
+<span class="kt">void</span> <span class="nf">Threshold</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span><span class="c1">//used</span>
+<span class="kt">bool</span> <span class="nf">MaxEnergyCut</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span><span class="c1">//used</span>
+<span class="kt">bool</span> <span class="nf">MaxNeighbours</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>                         <span class="c1">//unused</span>
+<span class="kt">bool</span> <span class="nf">MaxNeighboursNew</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="c1">//used</span>
+<span class="kt">bool</span> <span class="nf">badstrip</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">);</span><span class="c1">//used</span>
+<span class="kt">bool</span> <span class="nf">badstrippair</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">,</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">);</span><span class="c1">//used</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::Add()">elist::Add()<a class="anchor-link" href="#elist::Add()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>按能量从大到小的顺序，存储探测器 (pie、ring、CsI) 上每个信号的strip、energy、time信息。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>hira::unpackSi_HINP4()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">elist</span><span class="o">::</span><span class="n">Add</span><span class="p">(</span><span class="kt">int</span> <span class="n">StripNum</span><span class="p">,</span> <span class="kt">float</span> <span class="n">energy</span><span class="p">,</span> <span class="kt">int</span> <span class="n">energyRlow</span><span class="p">,</span> <span class="kt">int</span> <span class="n">energyR</span><span class="p">,</span><span class="kt">float</span> <span class="n">time</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">//first find place in list</span>
+  <span class="kt">int</span> <span class="n">previous_Nstore</span> <span class="o">=</span> <span class="n">Nstore</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(;;)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">StripNum</span><span class="o">==</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span><span class="o">&amp;&amp;</span><span class="n">energyR</span><span class="o">==</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Nstore</span><span class="o">--</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">Nstore</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">energyR</span> <span class="o">&gt;</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">nnn</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// not enougth room in list </span>
+
+  <span class="c1">//new list length</span>
+  <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">nnn</span><span class="p">,</span><span class="n">Nstore</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// move those in energy below the new value down the list </span>
+  <span class="k">if</span><span class="p">(</span><span class="n">N</span><span class="o">==</span><span class="p">(</span><span class="n">previous_Nstore</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+  <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&gt;</span><span class="n">i</span><span class="p">;</span><span class="n">j</span><span class="o">--</span><span class="p">)</span> <span class="n">Order</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Order</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+
+    <span class="c1">//add present energy to list</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="p">;</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span> <span class="o">=</span> <span class="n">energyR</span><span class="p">;</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyRlow</span> <span class="o">=</span> <span class="n">energyRlow</span><span class="p">;</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span> <span class="o">=</span> <span class="n">StripNum</span><span class="p">;</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// increase list length</span>
+  <span class="n">Nstore</span> <span class="o">=</span> <span class="n">N</span><span class="p">;</span>
+  <span class="n">mult</span> <span class="o">=</span> <span class="n">N</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-<ol>
-<li><p>输出</p>
-<ul>
-<li>有三个输出文件：sort.root, read.root, tree.root。前两个文件存储histograms，最后一个存储tree结构。</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="n">histo_sort</span> <span class="o">*</span> <span class="n">Histo_sort</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_sort</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for measured variables and properties of final particles</span>
-<span class="n">histo_read</span> <span class="o">*</span> <span class="n">Histo_read</span> <span class="o">=</span> <span class="k">new</span> <span class="n">histo_read</span><span class="p">(</span><span class="n">runNum</span><span class="p">);</span> <span class="c1">//for analyzed properties of reconstructed mother nuclei</span>
 
-<span class="n">TTree</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TTree</span><span class="p">(</span><span class="s">&quot;tree&quot;</span><span class="p">,</span><span class="s">&quot;tree&quot;</span><span class="p">);</span> <span class="c1">//for tree file output</span>
-<span class="n">newtree</span> <span class="nf">ntree</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::AddN()">elist::AddN()<a class="anchor-link" href="#elist::AddN()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>按条数从小到大的顺序，存储探测器 (pie、ring、CsI) 上每个信号的条数、时间、能量 (原始道址energyR, 刻度后能量energy) 信息。energyRlow是S4 low gain的信号，在本实验中无用。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>hira::unpackSi_HINP4()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">elist</span><span class="o">::</span><span class="n">AddN</span><span class="p">(</span><span class="kt">int</span> <span class="n">StripNum</span><span class="p">,</span> <span class="kt">float</span> <span class="n">energy</span><span class="p">,</span> <span class="kt">int</span> <span class="n">energyRlow</span><span class="p">,</span> <span class="kt">int</span> <span class="n">energyR</span><span class="p">,</span><span class="kt">float</span> <span class="n">time</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">//first find place in list</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(;;)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">Nstore</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">StripNum</span> <span class="o">&lt;</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">nnn</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// not enougth room in list </span>
+
+  <span class="c1">//new list length</span>
+  <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">nnn</span><span class="p">,</span><span class="n">Nstore</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// move those in energy below the new value down the list </span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&gt;</span><span class="n">i</span><span class="p">;</span><span class="n">j</span><span class="o">--</span><span class="p">)</span> <span class="n">Order</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Order</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+
+  <span class="c1">//add present energy to list</span>
+  <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="p">;</span>
+  <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyR</span> <span class="o">=</span> <span class="n">energyR</span><span class="p">;</span>
+  <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energyRlow</span> <span class="o">=</span> <span class="n">energyRlow</span><span class="p">;</span>
+  <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span> <span class="o">=</span> <span class="n">StripNum</span><span class="p">;</span>
+  <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">;</span>
+
+  <span class="c1">// increase list length</span>
+  <span class="n">Nstore</span> <span class="o">=</span> <span class="n">N</span><span class="p">;</span>
+  <span class="n">mult</span> <span class="o">=</span> <span class="n">N</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 
 </div>
@@ -13180,14 +13370,316 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31243;&#24207;&#32467;&#26500;">&#31243;&#24207;&#32467;&#26500;<a class="anchor-link" href="#&#31243;&#24207;&#32467;&#26500;">&#182;</a></h2>
+<h1 id="elist::Remove()">elist::Remove()<a class="anchor-link" href="#elist::Remove()">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="./img/sortcode_level.png" width="600" align="left"></p>
+<p>把某个信号从存储列表中去掉。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：</p>
+<ul>
+<li>ringCounter::findCsi()</li>
+<li>elist::Threshold()</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">elist</span><span class="o">::</span><span class="n">Remove</span><span class="p">(</span><span class="kt">int</span> <span class="n">entry</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">entry</span> <span class="o">&gt;=</span> <span class="n">Nstore</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;entry does not exist&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">entry</span> <span class="o">==</span> <span class="n">Nstore</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">Nstore</span><span class="o">--</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">entry</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="n">Nstore</span><span class="o">--</span><span class="p">;</span>
+
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::NeighboursNew()">elist::NeighboursNew()<a class="anchor-link" href="#elist::NeighboursNew()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>处理pie和ring的相邻条能量共享事件。只要相邻的条有信号，就认为它们有能量共享，将它们的能量相加得到总能量，并取其中能量最大的那根条的时间和位置。如果相邻条数量为2，则总能量再加0.107 MeV (认为有能量共享时，一部分能量损失在条间)。一般质子入射时，在硅里沉积能量低，能量共享只涉及两根条。沉积能量更高的事件，更容易引起多根相邻条打火，按理应该加上更大的能量修正，但此时我们仅处理质子事件，把相邻条大于2的事件舍弃。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>被其他函数调用：ringCounter::analysis()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">elist</span><span class="o">::</span><span class="n">NeighboursNew</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Nstore</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Nstore</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span><span class="n">Order</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">neighbours</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="k">return</span><span class="p">;}</span>
+  <span class="c1">//calculate number of neighbouring strips</span>
+  <span class="kt">int</span> <span class="n">ngroup</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//true hit multiplicity with neighbours included into one group</span>
+  <span class="kt">int</span> <span class="n">nn</span><span class="p">[</span><span class="mi">60</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">//number of neighbours in one group</span>
+  <span class="kt">float</span> <span class="n">maxenergy</span><span class="p">[</span><span class="mi">60</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">//max energy in one group</span>
+  <span class="kt">int</span> <span class="n">maxstrip</span><span class="p">[</span><span class="mi">60</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">//strip of max energy in one group</span>
+  <span class="kt">float</span> <span class="n">maxtime</span><span class="p">[</span><span class="mi">60</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">//time of max energy strip in one group</span>
+  <span class="kt">float</span> <span class="n">totalenergy</span><span class="p">[</span><span class="mi">60</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">//total energy of one group</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">totalenergy</span><span class="p">[</span><span class="n">ngroup</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="o">&gt;</span><span class="n">maxenergy</span><span class="p">[</span><span class="n">ngroup</span><span class="p">])</span>
+    <span class="p">{</span>
+      <span class="n">maxenergy</span><span class="p">[</span><span class="n">ngroup</span><span class="p">]</span> <span class="o">=</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="p">;</span>
+      <span class="n">maxstrip</span><span class="p">[</span><span class="n">ngroup</span><span class="p">]</span> <span class="o">=</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span><span class="p">;</span>
+      <span class="n">maxtime</span><span class="p">[</span><span class="n">ngroup</span><span class="p">]</span> <span class="o">=</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="n">Nstore</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">strip</span><span class="o">-</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">nn</span><span class="p">[</span><span class="n">ngroup</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+      <span class="k">continue</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="n">ngroup</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">reset</span><span class="p">();</span>
+  <span class="n">Nstore</span> <span class="o">=</span> <span class="n">ngroup</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span> <span class="o">=</span> <span class="n">totalenergy</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span> <span class="o">=</span> <span class="n">maxstrip</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span> <span class="o">=</span> <span class="n">maxtime</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">neighbours</span> <span class="o">=</span> <span class="n">nn</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">nn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span> <span class="o">+=</span> <span class="mf">0.107</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::Threshold()">elist::Threshold()<a class="anchor-link" href="#elist::Threshold()">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>舍弃低于能量阈值的信号。</p>
+<p>调用的其他函数：elist::Remove()</p>
+<p>被其他函数调用：ringCounter::analysis()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">Threshold</span><span class="p">(</span><span class="kt">float</span> <span class="n">threshold</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">threshold0</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="o">&lt;</span><span class="n">threshold0</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">Remove</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+      <span class="n">i</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::MaxEnergyCut">elist::MaxEnergyCut<a class="anchor-link" href="#elist::MaxEnergyCut">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>判断有无能量大于<code>maxE</code>的信号，如果有，返回true。用以舍弃能量信号过大的事件，一般非质子入射。</p>
+<p>被其他函数调用：ringCounter::analysis()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">elist</span><span class="o">::</span><span class="n">MaxEnergyCut</span><span class="p">(</span><span class="kt">float</span> <span class="n">maxE</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">cut</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">energy</span><span class="o">&gt;</span><span class="n">maxE</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cut</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">cut</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::MaxNeighboursNew">elist::MaxNeighboursNew<a class="anchor-link" href="#elist::MaxNeighboursNew">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>如果任一根pie或ring条有两根及以上相邻条，则返回true。用以舍弃多根相邻条打火的事件。</p>
+<p>被其他函数调用：ringCounter::analysis()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">MaxNeighboursNew</span><span class="p">(</span><span class="kt">int</span> <span class="n">nMaxNeighbours</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">cut</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">neighbours</span><span class="o">&gt;=</span><span class="n">nMaxNeighbours</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cut</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">cut</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::badstrip">elist::badstrip<a class="anchor-link" href="#elist::badstrip">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>如果有某根pie或ring在<code>stripbad</code>数组内，则返回true。用以舍弃坏条打火事件。</p>
+<p>被其他函数调用：ringCounter::analysis()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">elist</span><span class="o">::</span><span class="n">badstrip</span><span class="p">(</span><span class="kt">int</span> <span class="n">nbadstrip</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">stripbad</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">cut</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">find</span><span class="p">(</span><span class="n">stripbad</span><span class="p">,</span><span class="n">stripbad</span><span class="o">+</span><span class="n">nbadstrip</span><span class="p">,</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span><span class="p">)</span><span class="o">!=</span><span class="n">stripbad</span><span class="o">+</span><span class="n">nbadstrip</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">cut</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> 
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">cut</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="elist::badstrippair">elist::badstrippair<a class="anchor-link" href="#elist::badstrippair">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>如果有两根条，一根在<code>pair1</code>数组里，另一根在<code>pair2</code>数组里，返回true。用以舍弃坏条的两边相邻条打火的事件，这种事件中质子一般打在坏条上，坏条没有能量输出，而把能量分给了两边的相邻条。</p>
+<p>被其他函数调用：ringCounter::analysis()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">badstrippair</span><span class="p">(</span><span class="kt">int</span> <span class="n">npair</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">pair1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">pair2</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">cut</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">Nstore</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="n">npair</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="k">if</span><span class="p">((</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span><span class="o">==</span><span class="n">pair1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">&amp;&amp;</span><span class="n">Order</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">strip</span><span class="o">==</span><span class="n">pair2</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="o">||</span><span class="p">(</span><span class="n">Order</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">strip</span><span class="o">==</span><span class="n">pair2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">&amp;&amp;</span><span class="n">Order</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">strip</span><span class="o">==</span><span class="n">pair1</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+        <span class="p">{</span>
+          <span class="n">cut</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">cut</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 
 </div>
 </div>
